@@ -1,0 +1,136 @@
+<!-- <div class="bg-sky-800 bg-emerald-800 bg-rose-500 bg-red-600 bg-lime-700 bg-cyan-500 bg-yellow-400 bg-green-500 bg-violet-500 bg-lime-700 bg-orange-600 bg-red-400 bg-orange-800 bg-slate-600 bg-fuchsia-800 bg-indigo-600 bg-teal-300 "></div> -->
+<h2 class="text-2xl font-semibold text-center text-color mb-22">Agregar nueva categoria de gasto</h2>
+<form (ngSubmit)="onSubmit()" [formGroup]="registerForm" class="space-y-10">
+    
+    <div class="grid sm:grid-cols-2 gap-4">
+        
+        <div>
+            <label for="nombre" class="block text-sm font-medium text-color mb-1">Nombre</label>
+            <input
+            id="nombre"
+            type="text"
+            pInputText
+            formControlName="nombre"
+            class="w-full"
+            appAutofocus
+            />
+            <small *ngIf="registerForm.get('nombre')?.hasError('required') && registerForm.get('nombre')?.touched" class="text-red-500">
+            Ingrese nombre
+            </small>
+        </div> 
+
+        <div>
+            <label for="descri" class="block text-sm font-medium text-color mb-1">Descripcion</label>
+            <input
+            id="descri"
+            type="text"
+            pInputText
+            formControlName="descri"
+            class="w-full"
+            />            
+        </div>
+        
+        <div>
+            <label for="tipo" class="block text-sm font-medium text-color mb-1">Tipo</label>
+            <p-select 
+                id="tipo"
+                formControlName="tipo"
+                [options]="[
+                    { label: 'Ingreso', value: 'Ingreso' },
+                    { label: 'Gasto', value: 'Gasto' }
+                ]"
+                placeholder="Seleccione tipo"
+                class="w-full"
+            ></p-select>
+            <small *ngIf="registerForm.get('tipo')?.hasError('required') && registerForm.get('tipo')?.touched" class="text-red-500">
+                Seleccione un tipo
+            </small>
+        </div>
+
+        <div>
+            <label for="color-palette" class="block text-sm font-medium text-color mb-1">
+                Paleta de colores (Tailwind)
+            </label>
+            <div id="color-palette" class="flex flex-wrap gap-1">
+                <span
+                    *ngFor="let c of [
+                        {rgb:'#0ea5e9', tailwind:'bg-sky-500'}, 
+                        {rgb:'#10b981', tailwind:'bg-emerald-500'}, 
+                        {rgb:'#f43f5e', tailwind:'bg-rose-500'}, 
+                        {rgb:'#dc2626', tailwind:'bg-red-600'}, 
+                        {rgb:'#65a30d', tailwind:'bg-lime-700'}, 
+                        {rgb:'#06b6d4', tailwind:'bg-cyan-500'}, 
+                        {rgb:'#facc15', tailwind:'bg-yellow-400'}, 
+                        {rgb:'#22c55e', tailwind:'bg-green-500'}, 
+                        {rgb:'#8b5cf6', tailwind:'bg-violet-500'}, 
+                        {rgb:'#ea580c', tailwind:'bg-orange-600'}, 
+                        {rgb:'#f87171', tailwind:'bg-red-400'}, 
+                        {rgb:'#0f766e', tailwind:'bg-teal-300'}, 
+                        {rgb:'#334155', tailwind:'bg-slate-600'}, 
+                        {rgb:'#a21caf', tailwind:'bg-fuchsia-800'}, 
+                        {rgb:'#4f46e5', tailwind:'bg-indigo-600'}  
+                    ]"
+                    class="w-7 h-7 rounded-full border-2 border-gray-300 cursor-pointer flex items-center justify-center"
+                    [ngStyle]="{ 'background': c.rgb, 'outline': registerForm.get('color')?.value === c.tailwind ? '2px solid #2d3748' : '' }"
+                    (click)="registerForm.get('color')?.setValue(c.tailwind)"
+                    [attr.title]="c.tailwind"
+                >
+                    <i *ngIf="registerForm.get('color')?.value === c.tailwind" class="pi pi-check text-white text-xs"></i>
+                </span>
+            </div>
+        </div>        
+
+        <div>
+            <label for="icon" 
+                class="block text-sm font-medium text-color mb-1">
+                Icono (elige uno)
+            </label>
+            <p-select
+                id="icon"
+                formControlName="icon"
+                [options]="[
+                    { label: 'Carrito de compras', value: 'pi pi-cart-plus' },
+                    { label: 'Check', value: 'pi pi-check' },
+                    { label: 'Dinero', value: 'pi pi-dollar' },
+                    { label: 'Coche', value: 'pi pi-car' },
+                    { label: 'Casa', value: 'pi pi-home' },
+                    { label: 'Comida', value: 'pi pi-utensils' },
+                    { label: 'Corazón', value: 'pi pi-heart' },
+                    { label: 'Camisa', value: 'pi pi-shirt' },
+                    { label: 'Bolso', value: 'pi pi-briefcase' },
+                    { label: 'Entretenimiento', value: 'pi pi-star' },
+                    { label: 'Viaje', value: 'pi pi-send' }
+                ]"
+                optionLabel="label"
+                optionValue="value"
+                placeholder="Selecciona un icono"
+                class="w-full"
+                [filter]="true"
+                showClear="true"
+            >
+                <ng-template let-option pTemplate="item">
+                    <i class="pi {{option.value}} mr-2"></i>
+                    <span>{{ option.label }}</span>
+                </ng-template>
+                <ng-template let-option pTemplate="selectedItem">
+                    <i *ngIf="option" class="pi {{option.value}} mr-2"></i>
+                    <span *ngIf="option">{{ option.label }}</span>
+                    <span *ngIf="!option">Sin icono</span>
+                </ng-template>
+            </p-select>
+        </div>       
+
+        
+    </div>    
+
+    <div>
+        <button
+            pButton
+            type="submit"
+            label="Crear"
+            class="w-full"
+            [disabled]="registerForm.invalid"
+        ></button>
+    </div>
+    
+</form>

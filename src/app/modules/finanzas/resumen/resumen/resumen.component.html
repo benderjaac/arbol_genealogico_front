@@ -1,0 +1,43 @@
+<div class="grid grid-cols-4 gap-4 mt-6">
+  <div class="col-span-3 rounded shadow p-4">
+    <!-- Contenido del elemento principal (3/4) -->
+    <app-grafica-totales-meses/>
+  </div>
+  <div class="col-span-1 rounded shadow p-4">
+    <!-- Contenido del elemento secundario (1/4) -->
+    <div class="flex flex-col gap-3 items-center text-center">
+      <h2 class="font-bold text-xl tracking-tight text-blue-500 mb-1">Resumen Financiero</h2>
+      <p class="text-sm text-gray-600 mb-2">Aquí puedes ver un resumen de tu situación financiera actual.</p>
+      <div class="w-full flex flex-col items-center gap-2 mt-2">
+        <h3 class="font-semibold text-base text-cyan-600 mb-1">Balance</h3>
+        <div class="w-full flex flex-col gap-2">
+          <div class="flex items-center justify-between text-base">
+            <span class="font-medium text-gray-700">Disponible:</span>
+            <span class="font-bold text-green-600">{{ balanceUsuario.montoDisponible | currency:'MXN':'symbol' }}</span>
+          </div>
+          <div class="flex items-center justify-between text-base">
+            <span class="font-medium text-gray-700">Ahorrado:</span>
+            <span class="font-bold text-blue-600">{{ balanceUsuario.montoAhorrado | currency:'MXN':'symbol' }}</span>
+          </div>
+          <div class="flex items-center justify-between text-base border-t pt-2 mt-2">
+            <span class="font-medium text-gray-700">Total:</span>
+            <span class="font-bold text-green-600">{{ balanceUsuario.balanceTotal | currency:'MXN':'symbol' }}</span>
+          </div>
+          <div class="flex items-center justify-between text-xs mt-1">
+            <span class="text-gray-500">Última Actualización:</span>
+            <span class="text-gray-500">{{ balanceUsuario.ultimaActualizacion | date:'short' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="grid grid-cols-4 gap-4 mt-6">
+  <div class="col-span-6 rounded shadow p-4">
+    <!-- Contenido del elemento principal (3/4) -->
+    <app-grafica-acumulados-meses/>
+  </div>
+</div>
+
+
+

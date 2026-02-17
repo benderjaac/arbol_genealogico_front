@@ -1,0 +1,63 @@
+<!-- <div class="bg-sky-800 bg-emerald-800 bg-rose-500 bg-red-600 bg-lime-700 bg-cyan-500 bg-yellow-400 bg-green-500 bg-violet-500 bg-lime-700 bg-orange-600 bg-red-400 bg-orange-800 bg-slate-600 bg-fuchsia-800 bg-indigo-600 bg-teal-300 "></div> -->
+<h2 class="text-2xl font-semibold text-center text-color mb-22">Editando ahorro</h2>
+<form (ngSubmit)="onSubmit()" [formGroup]="editingForm" class="space-y-10">
+
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div>
+      <label for="descri" class="block text-sm font-medium text-color mb-1">Nombre del ahorro</label>
+      <input
+        id="descri"
+        type="text"
+        pInputText
+        formControlName="descri"
+        class="w-full"
+        appAutofocus
+      />
+      <small *ngIf="editingForm.get('descri')?.hasError('required') && editingForm.get('descri')?.touched" class="text-red-500">
+        Ingrese nombre
+      </small>
+    </div>
+
+    <div>
+      <label for="monto_meta" class="block text-sm font-medium text-color mb-1">Monto meta:</label>
+      <p-inputnumber
+        inputId="integeronly"
+        id="monto_meta"
+        prefix="$ "
+        formControlName="monto_meta"
+        class="w-full"
+      />
+      <small *ngIf="editingForm.get('monto_meta')?.hasError('required') && editingForm.get('monto_meta')?.touched" class="text-red-500">
+        Ingrese el monto meta
+      </small>
+    </div>
+
+    <div  class="mt-6">
+      <label for="fecha_inicio" class="block text-sm font-medium text-color mb-1">Fecha de inicio</label>
+
+      <p-datepicker
+        class="w-full"
+        id="fecha_inicio"
+        [showIcon]="true"
+        formControlName="fecha_inicio"
+        dateFormat="yy-mm-dd"
+        [readonlyInput]="true"
+      ></p-datepicker>
+      <small *ngIf="editingForm.get('fecha_inicio')?.hasError('required') && editingForm.get('fecha_inicio')?.touched" class="text-red-500">
+        Ingrese fecha de inicio
+      </small>
+
+    </div>
+  </div>
+
+  <div>
+    <button
+      pButton
+      type="submit"
+      label="Guardar"
+      class="w-full"
+      [disabled]="editingForm.invalid"
+    ></button>
+  </div>
+
+</form>

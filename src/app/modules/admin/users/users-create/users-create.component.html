@@ -1,0 +1,43 @@
+<h2 class="text-2xl font-semibold text-center mb-6">Crear usuario nuevo</h2>
+<form (ngSubmit)="onSubmit()" [formGroup]="registerForm" class="space-y-5">
+    <div>
+        <label for="username" class="block text-sm font-medium mb-1">Nombre de usuario</label>
+        <input
+        #usernameInput
+        id="username"
+        type="text"
+        pInputText
+        formControlName="username"
+        class="w-full"
+        />
+        <small *ngIf="registerForm.get('username')?.hasError('required') && registerForm.get('username')?.touched" class="text-red-500">
+        Usuario requerido
+        </small>
+    </div> 
+
+
+    <div>
+        <label for="email" class="block text-sm font-medium mb-1">E-mail</label>
+        <input
+        id="email"
+        type="email"
+        pInputText
+        formControlName="email"
+        class="w-full"
+        />
+        <small *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched" class="text-red-500">
+        Email requerido
+        </small>
+        <small *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched" class="text-red-500">
+        Email no válido
+        </small>
+    </div>
+
+    <button
+        pButton
+        type="submit"
+        label="Crear"
+        class="w-full"
+        [disabled]="registerForm.invalid"
+    ></button>
+</form>

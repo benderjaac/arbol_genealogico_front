@@ -1,0 +1,65 @@
+<p-drawer
+    [visible]="showSidebar()"
+    [modal]="isMobile()"
+    (onHide)="showSidebar.set(false)"
+    [closable]="false"    
+  >
+    <ng-template #header>
+        <div class="flex flex-col h-full">
+            <div class="flex items-center justify-between mb-2">
+                <span class="inline-flex items-center">
+                    <span class="font-semibold text-lg text-primary">FINANZAS PERSONALES</span>
+                </span>
+                <span class="ml-20">
+                    <p-button type="button" (click)="toggleSidebar()" icon="pi pi-times" rounded="true" outlined="true" styleClass="h-8 w-8"></p-button>
+                </span>
+            </div>
+            <hr class="mb-2 mx-2 border-t border-0 border-surface" />
+        </div>        
+        
+    </ng-template>
+  	<ng-template #content>	
+        <div class="flex flex-col h-full">           
+
+            <app-menu></app-menu>            
+            
+        </div>                
+    </ng-template>
+</p-drawer>
+
+<div class="flex h-screen" [ngClass]="{'ml-80 transition-all': showSidebar() && !isMobile()}">
+	<div class="flex flex-col flex-1">
+        <!-- Header -->
+		<div class="flex justify-between items-center p-4 shadow-md">            
+            <div>
+                <p-button *ngIf="!showSidebar()" (click)="toggleSidebar()" icon="pi pi-bars" />
+            </div>  
+            
+            <div class="flex gap-2 items-center"> 
+                <app-disponible></app-disponible>
+                <!-- <button pButton [label]="_authService._user()!.username" icon="pi pi-user" class="w-40" outlined></button> -->
+                <button pButton label="Cerrar sesión" (click)="singOut()" icon="pi pi-sign-out" class="w-40" severity="danger" text></button>
+                <button pButton 
+                    pRipple
+                    (click)="toggleTheme()" 
+                    class="bg-transparent h-8 w-8 border-0"
+                    [ngClass]="{'hover:bg-gray-200': !isDarkMode, 'hover:bg-gray-700': isDarkMode}"
+                    >
+                    <span *ngIf="!isDarkMode">
+                        <i class="pi pi-sun" style="color: gray"></i>
+                    </span>
+                    <span *ngIf="isDarkMode">
+                        <i class="pi pi-moon" style="color: gray"></i>
+                    </span>
+                </button>
+            </div>			
+            
+			
+		</div>
+
+		<!-- Zona de trabajo -->
+		<main class="flex-1 p-4 overflow-auto">	
+			<router-outlet></router-outlet>
+		</main>
+	</div>
+</div>

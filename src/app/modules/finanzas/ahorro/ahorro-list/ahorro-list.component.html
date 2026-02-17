@@ -1,0 +1,207 @@
+<p-toast />
+<div class="">
+    <p-dataview #dv [value]="ahorros()" [layout]="layout">
+        <ng-template #header>
+            <div class="flex items-center justify-between">
+                <span class="text-xl font-bold">Ahorros</span>
+
+                <button
+                    pButton
+                    label="Nuevo ahorro"
+                    (click)="addAhorro()"
+                    icon="pi pi-dollar"
+                    class="w-40"
+                    severity="info" text>
+
+                </button>
+
+                <div class="flex justify-end">
+                    <p-selectbutton [(ngModel)]="layout" [options]="options" [allowEmpty]="false">
+                        <ng-template #item let-item>
+                            <i class="pi " [ngClass]="{ 'pi-bars': item === 'list', 'pi-table': item === 'grid' }"></i>
+                        </ng-template>
+                    </p-selectbutton>
+                </div>
+            </div>
+
+        </ng-template>
+
+        <ng-template #list let-items>
+            <div class="grid grid-cols-12 gap-4 grid-nogutter">
+                <div class="col-span-12" *ngFor="let item of items; let first = first" class="col-span-12">
+                    <div
+                        class="flex flex-col sm:flex-row sm:items-center p-6 gap-4"
+                        [ngClass]="{ 'border-t': !first }"
+                    >
+
+                        <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6">
+                            <div class="flex flex-row md:flex-col justify-between items-start gap-2">
+                                <div>
+                                    <div class="text-lg font-medium text-color mt-2">
+                                      <button
+                                        pButton
+                                        pRipple
+                                        type="button"
+                                        (click)="onEdit(item)"
+                                        icon="pi pi-pen-to-square"
+                                        rounded
+                                        text
+                                        severity="info">
+                                      </button>
+                                      Ahorro: {{ item.descri }}
+                                    </div>
+                                    <div class="font-medium text-muted-color text-sm">Desde {{ item.fecha_inicio }}</div>
+                                    <div class="font-medium text-muted-color text-sm">Falta por ahorrar {{ item.monto_meta-item.monto_actual | currency: 'MXN' }}</div>
+
+                                </div>
+                            </div>
+                            <div class="flex flex-col md:items-end">
+                                <p>
+                                    Ahorrado:
+                                    <span class="text-xl text-primary font-semibold">
+                                        {{item.monto_actual | currency: 'MXN'}}
+                                    </span>
+                                </p>
+                                <div class="flex gap-2">
+                                    <button
+                                        pButton
+                                        icon="pi pi-dollar"
+                                        label="Depositar"
+                                        severity="success"
+                                        class="flex-auto whitespace-nowrap"
+                                        (click)="openFormDeposito(item.id, 'deposito');"
+                                    ></button>
+                                    <button
+                                        pButton
+                                        icon="pi pi-dollar"
+                                        label="Retirar"
+                                        severity="warn"
+                                        class="flex-auto whitespace-nowrap"
+                                        (click)="openFormDeposito(item.id, 'retiro');"
+                                    ></button>
+                                    <button
+                                        pButton
+                                        icon="pi pi-info-circle"
+                                        label="Detalle"
+                                        severity="info"
+                                        class="flex-auto whitespace-nowrap"
+                                        (click)="detalleAhorro(item.id);"
+                                    ></button>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-6">
+                        <p-progressbar [value]="item.porcentaje" />
+                        <p class="text-muted-color text-end">
+                            Meta: {{item.monto_meta | currency: 'MXN'}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #grid let-items>
+            <div class="grid grid-cols-12 gap-4">
+                <div *ngFor="let item of items" class="col-span-12 sm:col-span-6 md:col-span-4 p-2">
+                    <div
+                        class="p-6 border border-color rounded flex flex-col"
+                    >
+                        <div class="pt-6">
+                            <div class="flex flex-row justify-between products-start gap-2">
+                                <div>
+                                    <span class="font-medium text-color text-sm">Desde {{ item.fecha_inicio }}</span>
+                                    <div class="text-md font-medium mt-1">{{ item.descri }}</div>
+                                    Ahorrado:
+                                    <span class="text-md text-primary font-semibold">
+                                        {{item.monto_actual | currency: 'MXN'}}
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="flex flex-col gap-6 mt-6">
+                                <span class="text-sm text-muted-color">Meta: {{ item.monto_actual | currency: 'MXN' }}</span>
+                                <div class="text-color font-bold">
+                                    {{ item.porcentaje }} %
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <button
+                                        pButton
+                                        icon="pi pi-dollar"
+                                        label="Depositar"
+                                        severity="success"
+                                        class="flex-auto whitespace-nowrap"
+                                        (click)="openFormDeposito(item.id, 'deposito');"
+                                    ></button>
+                                    <button
+                                        pButton
+                                        icon="pi pi-dollar"
+                                        label="Retirar"
+                                        severity="warn"
+                                        class="flex-auto whitespace-nowrap"
+                                        (click)="openFormDeposito(item.id, 'retiro');"
+                                    ></button>
+                                    <button
+                                        pButton
+                                        icon="pi pi-info-circle"
+                                        label="Detalle"
+                                        severity="info"
+                                        class="flex-auto whitespace-nowrap"
+                                        (click)="detalleAhorro(item.id);"
+                                    ></button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+    </p-dataview>
+</div>
+<p-dialog
+    [(visible)]="visibleAdd"
+    [modal]="true"
+    [draggable]="true"
+    styleClass="w-160 min-w-80 h-130"
+    contentStyleClass="dialog-content-scroll"
+    [resizable]="false">
+    <app-ahorro-create *ngIf="visibleAdd"
+        (msjEvent)="mostrarMensaje($event)"
+        (cerrarDialog)="closeDialog($event, 'create')">
+
+    </app-ahorro-create>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="visibleEdit"
+  [modal]="true"
+  [draggable]="true"
+  styleClass="w-160 min-w-80 h-130"
+  contentStyleClass="dialog-content-scroll"
+  [resizable]="false">
+  <app-ahorro-edit *ngIf="visibleEdit"
+     [ahorroEdting]="ahorroEdting"
+     (msjEvent)="mostrarMensaje($event)"
+     (cerrarDialog)="closeDialog($event, 'edit')">
+  </app-ahorro-edit>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="visibleDeposito"
+  [modal]="true"
+  [draggable]="true"
+  styleClass="w-160 min-w-80 h-130"
+  contentStyleClass="dialog-content-scroll"
+  [resizable]="false">
+  <app-ahorro-deposito-create *ngIf="visibleDeposito"
+     [ahorroId]="idAhorroSelected"
+     [tipoDeposito]="tipoDeposito"
+     (msjEvent)="mostrarMensaje($event)"
+     (cerrarDialog)="closeDialog($event, 'deposito')">
+  </app-ahorro-deposito-create>
+</p-dialog>
+  
