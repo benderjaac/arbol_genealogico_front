@@ -1,6 +1,6 @@
 <p-toast />
 <p-table #dt
-    [value]="usuarios"
+    [value]="personas"
     [lazy]="true"
 
     [paginator]="true"
@@ -12,17 +12,17 @@
 
     filterMode="row"
 
-    (onLazyLoad)="getUsersData($event)"
+    (onLazyLoad)="getPersonsData($event)"
 
     [loading]="loading"
     [tableStyle]="{ 'min-width': '50rem' }">
 
     <ng-template pTemplate="caption">
         <div class="flex items-center justify-between">
-            <span class="text-xl font-bold">Usuarios</span>
+            <span class="text-xl font-bold">Personas</span>
             <button
                 pButton
-                label="Agregar usuario"
+                label="Agregar persona"
                 (click)="addUser()"
                 icon="pi pi-user"
                 class="w-40"
@@ -72,17 +72,17 @@
         </tr>
         <tr>
             <th pSortableColumn="id"><p-sortIcon field="id" /> ID</th>
-            <th pSortableColumn="email"><p-sortIcon field="email" /> Email</th>
-            <th pSortableColumn="username"><p-sortIcon field="username" /> Username</th>
-            <th pSortableColumn="perfil.nombre"><p-sortIcon field="perfil.nombre" /> Perfil</th>
+            <th pSortableColumn="nombreCompleto"><p-sortIcon field="nombreCompleto" /> Nombre</th>
+            <th pSortableColumn="fechaNacimiento"><p-sortIcon field="fechaNacimiento" />fechaNacimiento </th>
+            <th pSortableColumn="lugarNacimiento"><p-sortIcon field="lugarNacimiento" /> lugarNacimiento</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-usuario>
         <tr>
             <td>{{ usuario.id }}</td>
-            <td>{{ usuario.email }}</td>
-            <td>{{ usuario.username }}</td>
-            <td>{{ usuario.perfilNombre }}</td>
+            <td>{{ usuario.nombreCompleto }}</td>
+            <td>{{ usuario.fechaNacimiento }}</td>
+            <td>{{ usuario.lugarNacimiento }}</td>
         </tr>
     </ng-template>
 </p-table>

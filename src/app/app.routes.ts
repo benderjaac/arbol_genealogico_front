@@ -54,6 +54,11 @@ export const routes: Routes = [
                             {path: 'update', loadComponent: () => import('app/modules/admin/perfil/perfil-update/perfil-update.component').then(m => m.PerfilUpdateComponent)},
                         ]
                     },
+                    {path: 'persons',
+                      children: [
+                        {path: 'list', loadComponent: () => import('app/modules/admin/persons/persons-list/persons-list.component').then(m => m.PersonsListComponent)},
+                      ]
+                    },
                 ]
             },
             {path:'finanzas',

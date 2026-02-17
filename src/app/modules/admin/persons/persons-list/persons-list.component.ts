@@ -3,7 +3,6 @@ import { Component, ViewChild } from '@angular/core';
 import { ApiSort } from 'app/core/models/query.model';
 import { ResponseApiType } from 'app/core/models/response-api.model';
 import { User } from 'app/core/models/user.model';
-import { UserService } from 'app/core/services-api/user.service';
 import { FilterService } from 'app/modules/utils/filter.service';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -11,6 +10,8 @@ import { Table, TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { Toast } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
 import { Dialog } from 'primeng/dialog';
+import {PersonService} from '../../../../core/services-api/person.service';
+import {Person} from '../../../../core/models/person.model';
 
 @Component({
   selector: 'app-users-list',
@@ -22,7 +23,7 @@ export class PersonsListComponent {
 
   @ViewChild('dt') dt!: Table;
 
-  usuarios : User[] = [];
+  personas : Person[] = [];
   totalRecords = 0;
 
   rowsPerPageOptions: number[] = [];
@@ -39,7 +40,7 @@ export class PersonsListComponent {
   destroy$ = new Subject<void>();
 
   constructor(
-    private _userService: UserService,
+    private _personService: PersonService,
     private _filterService: FilterService,
     private _messageService: MessageService,
   ){
@@ -56,21 +57,21 @@ export class PersonsListComponent {
     this.destroy$.complete();
   }
 
-  getUsersData(event: TableLazyLoadEvent):void{
+  getPersonsData(event: TableLazyLoadEvent):void{
     this.lastEvent=event;
     this.loading = true;
 
     const ApiQuery = this._filterService.buildQuery(event, this.rowsDefault, this.OrderDefault);
-    this._userService.getDataUsers(ApiQuery)
+    this._personService.getDataPersons(ApiQuery)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res: ResponseApiType<User>)=>{
-          this.usuarios = res.result.data;
+        next: (res: ResponseApiType<Person>)=>{
+          this.personas = res.result.data;
           this.totalRecords = res.result.pagination.totalItems;
           this.loading = false;
         },
         error: (error)=> {
-          this.usuarios=[];
+          this.personas=[];
           this.totalRecords = 0;
           this.loading = false;
           this._messageService.add(
@@ -86,7 +87,7 @@ export class PersonsListComponent {
       if (this.lastEvent!=null) {
         this.dt.filters={};
         this.lastEvent.filters={};
-        this.getUsersData(this.lastEvent);
+        this.getPersonsData(this.lastEvent);
       }
     }
   }
@@ -98,7 +99,7 @@ export class PersonsListComponent {
 
   reloadTable():void{
     if (this.lastEvent!=null) {
-      this.getUsersData(this.lastEvent);
+      this.getPersonsData(this.lastEvent);
     }
   }
 
@@ -116,7 +117,7 @@ export class PersonsListComponent {
       globalFilter: null
     };
     this.showFilters=false;
-    this.getUsersData(event);
+    this.getPersonsData(event);
   }
 
   addUser():void{
