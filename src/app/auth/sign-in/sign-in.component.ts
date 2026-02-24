@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
@@ -12,7 +12,7 @@ import { Toast } from 'primeng/toast';
 
 @Component({
   selector: 'app-sign-in',
-  imports: [Toast, CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule, PasswordModule, RouterModule],
+  imports: [Toast, ReactiveFormsModule, InputTextModule, ButtonModule, PasswordModule, RouterModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
   providers: [MessageService]

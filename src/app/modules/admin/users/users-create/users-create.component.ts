@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from 'app/core/services-api/user.service';
@@ -8,7 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-users-create',
-  imports: [AutoFocusModule,  ReactiveFormsModule, InputTextModule, ButtonModule, CommonModule],
+  imports: [AutoFocusModule, ReactiveFormsModule, InputTextModule, ButtonModule],
   templateUrl: './users-create.component.html',
 })
 export class UsersCreateComponent {

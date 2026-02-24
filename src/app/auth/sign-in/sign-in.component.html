@@ -1,23 +1,25 @@
 <p-toast />
 <div class="min-h-screen flex items-center justify-center bg-surface-ground">
-    <div class="p-8 rounded-2xl shadow-lg w-full max-w-md  border border-surface-border">
-      <h2 class="text-2xl font-semibold text-center text-color mb-6">Iniciar sesión</h2>
-  
-      <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="space-y-5">
-        <div>
-          <label for="username" class="block text-sm font-medium text-color mb-1">Usuario</label>
-          <input
-            id="username"
-            type="text"
-            pInputText
-            formControlName="username"
-            class="w-full "
+  <div class="p-8 rounded-2xl shadow-lg w-full max-w-md  border border-surface-border">
+    <h2 class="text-2xl font-semibold text-center text-color mb-6">Iniciar sesión</h2>
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="space-y-5">
+      <div>
+        <label for="username" class="block text-sm font-medium text-color mb-1">Usuario</label>
+        <input
+          id="username"
+          type="text"
+          pInputText
+          formControlName="username"
+          class="w-full "
           />
-          <small *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched" class="text-red-500">
-            Usuario requerido
-          </small>
+          @if (loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched) {
+            <small class="text-red-500">
+              Usuario requerido
+            </small>
+          }
         </div>
-  
+
         <div>
           <label for="password" class="block text-sm font-medium text-color mb-1">Contraseña</label>
           <input
@@ -27,24 +29,25 @@
             formControlName="password"
             [feedback]="false"
             class="w-full "
-          />
-          <small *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched" class="text-red-500">
-            Contraseña requerida
-          </small>
-        </div>
-        
-        <button
-          pButton
-          type="submit"
-          label="Entrar"
-          class="w-full text-color"
-          [disabled]="loginForm.invalid"
-        ></button>
-      </form>
-      <div class="mt-4">        
-        <a [routerLink]="['/register']" class="label-color"> Registrarme </a>
-      </div>      
+            />
+            @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+              <small class="text-red-500">
+                Contraseña requerida
+              </small>
+            }
+          </div>
 
+          <button
+            pButton
+            type="submit"
+            label="Entrar"
+            class="w-full text-color"
+            [disabled]="loginForm.invalid"
+          ></button>
+        </form>
+        <div class="mt-4">
+          <a [routerLink]="['/register']" class="label-color"> Registrarme </a>
+        </div>
+
+      </div>
     </div>
-  </div>
-  

@@ -1,80 +1,88 @@
 <div class="overflow-y-auto">
 
-    <ng-container *ngFor="let menuPrincipal of perfilMenu">
-
-        <div class="justify-center font-medium text-muted-color border-t border-b border-surface-border my-2">{{menuPrincipal.nombre}}</div>
-        <ul class="list-none m-0">
-            
-            <ng-container *ngFor="let Menu of menuPrincipal.hijos">
-            @if(Menu.hijos.length==0){
-                <li>
-                    <a pRipple [routerLink]="[Menu.link]" class="flex items-center cursor-pointer p-2 rounded-border text-color p-ripple">
-                        <i *ngIf="Menu.icon!=null" [class]="Menu.icon"></i>
-                        <span class="font-medium ml-2">{{Menu.nombre}}</span>
-                    </a>
-                </li>
-            }@else {
-                <li>
-                    <div
+  @for (menuPrincipal of perfilMenu; track menuPrincipal) {
+    <div class="justify-center font-medium text-muted-color border-t border-b border-surface-border my-2">{{menuPrincipal.nombre}}</div>
+    <ul class="list-none m-0">
+      @for (Menu of menuPrincipal.hijos; track Menu) {
+        @if(Menu.hijos.length==0){
+          <li>
+            <a pRipple [routerLink]="[Menu.link]" class="flex items-center cursor-pointer p-2 rounded-border text-color p-ripple">
+              @if (Menu.icon!=null) {
+                <i [class]="Menu.icon"></i>
+              }
+              <span class="font-medium ml-2">{{Menu.nombre}}</span>
+            </a>
+          </li>
+          }@else {
+          <li>
+            <div
+              pRipple
+              pStyleClass="@next"
+              enterFromClass="hidden"
+              enterActiveClass="animate-slidedown"
+              leaveToClass="hidden"
+              leaveActiveClass="animate-slideup"
+              class="p-2 flex items-center justify-between text-color cursor-pointer p-ripple"
+              >
+              <span>
+                @if (Menu.icon!=null) {
+                  <i [class]="Menu.icon"></i>
+                }
+                <span class="font-medium ml-2">{{Menu.nombre}}</span>
+              </span>
+              <i class="pi pi-chevron-down"></i>
+            </div>
+            <ul class="list-none p-0 m-0 overflow-hidden">
+              @for (subMenu of Menu.hijos; track subMenu) {
+                @if(subMenu.hijos.length==0){
+                  @if (subMenu.visible) {
+                    <li>
+                      <a pRipple [routerLink]="[subMenu.link]" class="flex items-center ml-4 cursor-pointer p-2 rounded-border text-color p-ripple">
+                        @if (subMenu.icon!=null) {
+                          <i [class]="subMenu.icon"></i>
+                        }
+                        <span class="ml-2">{{subMenu.nombre}}</span>
+                      </a>
+                    </li>
+                  }
+                  }@else {
+                  @if (subMenu.visible) {
+                    <li>
+                      <div
                         pRipple
                         pStyleClass="@next"
                         enterFromClass="hidden"
                         enterActiveClass="animate-slidedown"
                         leaveToClass="hidden"
                         leaveActiveClass="animate-slideup"
-                        class="p-2 flex items-center justify-between text-color cursor-pointer p-ripple"
-                    >
-                        <span>
-                            <i *ngIf="Menu.icon!=null" [class]="Menu.icon"></i>
-                            <span class="font-medium ml-2">{{Menu.nombre}}</span>
-                        </span>
+                        class="p-4 flex items-center justify-between text-color cursor-pointer p-ripple"
+                        >
+                        <span class="ml-4">{{subMenu.nombre}}</span>
                         <i class="pi pi-chevron-down"></i>
-                    </div>
-                    <ul class="list-none p-0 m-0 overflow-hidden">
-                        <ng-container *ngFor="let subMenu of Menu.hijos">
-                            @if(subMenu.hijos.length==0){
-                                <li *ngIf="subMenu.visible">
-                                    <a pRipple [routerLink]="[subMenu.link]" class="flex items-center ml-4 cursor-pointer p-2 rounded-border text-color p-ripple">
-                                        <i *ngIf="subMenu.icon!=null" [class]="subMenu.icon"></i>
-                                        <span class="ml-2">{{subMenu.nombre}}</span>
-                                    </a>
-                                </li>
-                            }@else {
-                                <li *ngIf="subMenu.visible">
-                                    <div
-                                        pRipple
-                                        pStyleClass="@next"
-                                        enterFromClass="hidden"
-                                        enterActiveClass="animate-slidedown"
-                                        leaveToClass="hidden"
-                                        leaveActiveClass="animate-slideup"
-                                        class="p-4 flex items-center justify-between text-color cursor-pointer p-ripple"
-                                    >
-                                        <span class="ml-4">{{subMenu.nombre}}</span>
-                                        <i class="pi pi-chevron-down"></i>
-                                    </div>
-                                    <ul class="list-none p-0 m-0 overflow-hidden">
-                                        <ng-container *ngFor="let subsubMenu of subMenu.hijos">                                            
-                                            <li *ngIf="subsubMenu.visible">
-                                                <a pRipple [routerLink]="[subsubMenu.link]" class="ml-8 flex items-center cursor-pointer p-2 rounded-border text-color p-ripple">
-                                                    <i *ngIf="subsubMenu.icon!=null" [class]="subsubMenu.icon"></i>
-                                                    <span class="ml-2">{{subsubMenu.nombre}}</span>
-                                                </a>
-                                            </li>                                            
-                                        </ng-container>
-                                        
-                                    </ul>
-                                </li>
-                            }                            
-                        </ng-container>
-                        
-                    </ul>
-                </li>
-            }
-            </ng-container>
-                             
-        </ul>
+                      </div>
+                      <ul class="list-none p-0 m-0 overflow-hidden">
+                        @for (subsubMenu of subMenu.hijos; track subsubMenu) {
+                          @if (subsubMenu.visible) {
+                            <li>
+                              <a pRipple [routerLink]="[subsubMenu.link]" class="ml-8 flex items-center cursor-pointer p-2 rounded-border text-color p-ripple">
+                                @if (subsubMenu.icon!=null) {
+                                  <i [class]="subsubMenu.icon"></i>
+                                }
+                                <span class="ml-2">{{subsubMenu.nombre}}</span>
+                              </a>
+                            </li>
+                          }
+                        }
+                      </ul>
+                    </li>
+                  }
+                }
+              }
+            </ul>
+          </li>
+        }
+      }
+    </ul>
+  }
 
-    </ng-container>   
-    
 </div>

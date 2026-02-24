@@ -1,16 +1,16 @@
 <div class="min-h-screen flex items-center justify-center bg-surface-ground">
-    <div class="p-8 rounded-2xl shadow-lg w-full max-w-md bg-surface-card border border-surface-border">
-        <h2 class="text-2xl font-semibold text-center text-color mb-6">Cerrando sesion</h2>
-  
-        <div class="flex justify-center">
-            <ng-container *ngIf="countdown > 0">
-                Redirigiendo en {{countdown | i18nPlural: countdownMapping }}
-            </ng-container> 
-        </div>      
+  <div class="p-8 rounded-2xl shadow-lg w-full max-w-md bg-surface-card border border-surface-border">
+    <h2 class="text-2xl font-semibold text-center text-color mb-6">Cerrando sesion</h2>
 
-        <div class="mt-6 flex justify-center">
-            <a [routerLink]="['/sign-in']"> Ir a iniciar sesión </a>
-        </div> 
-
+    <div class="flex justify-center">
+      @if (countdown > 0) {
+        Redirigiendo en {{countdown | i18nPlural: countdownMapping }}
+      }
     </div>
+
+    <div class="mt-6 flex justify-center">
+      <a [routerLink]="['/sign-in']"> Ir a iniciar sesión </a>
+    </div>
+
   </div>
+</div>

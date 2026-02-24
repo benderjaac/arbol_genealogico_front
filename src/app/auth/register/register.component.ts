@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -12,7 +12,7 @@ import { Toast } from 'primeng/toast';
 
 @Component({
   selector: 'app-register',
-  imports: [Toast, CommonModule, ReactiveFormsModule, InputTextModule, ButtonModule, PasswordModule, RouterModule],
+  imports: [Toast, ReactiveFormsModule, InputTextModule, ButtonModule, PasswordModule, RouterModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
   providers: [MessageService]

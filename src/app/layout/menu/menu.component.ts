@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService} from 'app/auth/auth.service';
@@ -8,7 +8,7 @@ import { StyleClass } from 'primeng/styleclass';
 
 @Component({
   selector: 'app-menu',
-  imports: [Ripple, StyleClass, CommonModule, RouterModule],
+  imports: [Ripple, StyleClass, RouterModule],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })

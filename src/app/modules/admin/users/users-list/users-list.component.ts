@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, ViewChild } from '@angular/core';
 import { ApiSort } from 'app/core/models/query.model';
 import { ResponseApiType } from 'app/core/models/response-api.model';
@@ -15,7 +15,7 @@ import { UsersCreateComponent } from '../users-create/users-create.component';
 
 @Component({
   selector: 'app-users-list',
-  imports: [UsersCreateComponent, Dialog, Toast, TableModule, CommonModule, ButtonModule],
+  imports: [UsersCreateComponent, Dialog, Toast, TableModule, ButtonModule],
   templateUrl: './users-list.component.html',
   providers: [MessageService]
 })

@@ -2,11 +2,11 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { finalize, Subject, takeUntil, takeWhile, tap, timer } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
-import { I18nPluralPipe, NgIf } from '@angular/common';
+import { I18nPluralPipe } from '@angular/common';
 
 @Component({
   selector: 'app-sign-out',
-  imports: [NgIf, I18nPluralPipe, RouterLink],
+  imports: [I18nPluralPipe, RouterLink],
   templateUrl: './sign-out.component.html',
   styleUrl: './sign-out.component.css'
 })

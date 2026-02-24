@@ -1,98 +1,100 @@
 <p-toast />
 <p-table #dt
-    [value]="personas"
-    [lazy]="true"
+  [value]="personas"
+  [lazy]="true"
 
-    [paginator]="true"
-    [rowsPerPageOptions]="rowsPerPageOptions"
-    [rows]="rowsDefault"
-    [totalRecords]="totalRecords"
-    [showCurrentPageReport]="true"
-    currentPageReportTemplate="Mostrando de {first} a {last} del total {totalRecords} personas"
+  [paginator]="true"
+  [rowsPerPageOptions]="rowsPerPageOptions"
+  [rows]="rowsDefault"
+  [totalRecords]="totalRecords"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Mostrando de {first} a {last} del total {totalRecords} personas"
 
-    filterMode="row"
+  filterMode="row"
 
-    (onLazyLoad)="getPersonsData($event)"
+  (onLazyLoad)="getPersonsData($event)"
 
-    [loading]="loading"
-    [tableStyle]="{ 'min-width': '50rem' }">
+  [loading]="loading"
+  [tableStyle]="{ 'min-width': '50rem' }">
 
-    <ng-template pTemplate="caption">
-        <div class="flex items-center justify-between">
-            <span class="text-xl font-bold">Personas</span>
-            <button
-                pButton
-                label="Agregar persona"
-                (click)="addUser()"
-                icon="pi pi-user"
-                class="w-40"
-                severity="info" text>
+  <ng-template pTemplate="caption">
+    <div class="flex items-center justify-between">
+      <span class="text-xl font-bold">Personas</span>
+      <button
+        pButton
+        label="Agregar persona"
+        (click)="addUser()"
+        icon="pi pi-user"
+        class="w-40"
+        severity="info" text>
 
-            </button>
-            <div>
-                <p-button icon="pi pi-eraser"
-                    class="mr-2"
-                    (click)="resetTable()" rounded raised />
-                <p-button icon="pi pi-filter-fill"
-                    class="mr-2"
-                    (click)="showHiddeFilters()" rounded raised />
-                <p-button icon="pi pi-refresh"
-                    (click)="reloadTable()" rounded raised />
+      </button>
+      <div>
+        <p-button icon="pi pi-eraser"
+          class="mr-2"
+          (click)="resetTable()" rounded raised />
+          <p-button icon="pi pi-filter-fill"
+            class="mr-2"
+            (click)="showHiddeFilters()" rounded raised />
+            <p-button icon="pi pi-refresh"
+              (click)="reloadTable()" rounded raised />
             </div>
-        </div>
-    </ng-template>
+          </div>
+        </ng-template>
 
-    <ng-template pTemplate="header">
-        <!-- filtros -->
-         <tr *ngIf="showFilters">
-            <th>
-            </th>
-            <th>
+        <ng-template pTemplate="header">
+          <!-- filtros -->
+          @if (showFilters) {
+            <tr>
+              <th>
+              </th>
+              <th>
                 <input class="border-solid border-2 rounded-full pl-2"
-                pInputText
-                type="text"
-                (input)="onFilterInput($event, 'email', 'contains')"
-                />
-            </th>
-            <th>
-                <input class="border-solid border-2 rounded-full pl-2"
-                pInputText
-                type="text"
-                (input)="onFilterInput($event, 'username', 'contains')"
-                />
-            </th>
-            <th>
-                <input class="border-solid border-2 rounded-full pl-2"
-                pInputText
-                type="text"
-                (input)="onFilterInput($event, 'perfil.nombre', 'contains')"
-                />
-            </th>
-            <th></th>
-        </tr>
-        <tr>
-            <th pSortableColumn="id"><p-sortIcon field="id" /> ID</th>
-            <th pSortableColumn="nombreCompleto"><p-sortIcon field="nombreCompleto" /> Nombre</th>
-            <th pSortableColumn="fechaNacimiento"><p-sortIcon field="fechaNacimiento" />fechaNacimiento </th>
-            <th pSortableColumn="lugarNacimiento"><p-sortIcon field="lugarNacimiento" /> lugarNacimiento</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-usuario>
-        <tr>
-            <td>{{ usuario.id }}</td>
-            <td>{{ usuario.nombreCompleto }}</td>
-            <td>{{ usuario.fechaNacimiento }}</td>
-            <td>{{ usuario.lugarNacimiento }}</td>
-        </tr>
-    </ng-template>
-</p-table>
+                  pInputText
+                  type="text"
+                  (input)="onFilterInput($event, 'email', 'contains')"
+                  />
+                </th>
+                <th>
+                  <input class="border-solid border-2 rounded-full pl-2"
+                    pInputText
+                    type="text"
+                    (input)="onFilterInput($event, 'username', 'contains')"
+                    />
+                  </th>
+                  <th>
+                    <input class="border-solid border-2 rounded-full pl-2"
+                      pInputText
+                      type="text"
+                      (input)="onFilterInput($event, 'perfil.nombre', 'contains')"
+                      />
+                    </th>
+                    <th></th>
+                  </tr>
+                }
+                <tr>
+                  <th pSortableColumn="id"><p-sortIcon field="id" /> ID</th>
+                  <th pSortableColumn="nombreCompleto"><p-sortIcon field="nombreCompleto" /> Nombre</th>
+                  <th pSortableColumn="fechaNacimiento"><p-sortIcon field="fechaNacimiento" />fechaNacimiento </th>
+                  <th pSortableColumn="lugarNacimiento"><p-sortIcon field="lugarNacimiento" /> lugarNacimiento</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-usuario>
+                <tr>
+                  <td>{{ usuario.id }}</td>
+                  <td>{{ usuario.nombreCompleto }}</td>
+                  <td>{{ usuario.fechaNacimiento }}</td>
+                  <td>{{ usuario.lugarNacimiento }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
 
-<p-dialog
-    [(visible)]="visibleAddUser"
-    [modal]="true"
-    [draggable]="false"
-    styleClass=""
-    [style]="{ width: '40vw' }"
-    [draggable]="false"
-    [resizable]="false">
-</p-dialog>
+            <p-dialog
+              [(visible)]="visibleAddUser"
+              [modal]="true"
+              [draggable]="false"
+              styleClass=""
+              [style]="{ width: '40vw' }"
+              [draggable]="false"
+              [resizable]="false">
+            </p-dialog>
