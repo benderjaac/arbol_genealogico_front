@@ -1,5 +1,3 @@
-import { Ahorro } from "./ahorro.model"
-import { Categoria } from "./categoria.model"
 import { User } from "./user.model"
 
 export interface ResponseApi{
@@ -17,7 +15,7 @@ export interface ResponseApiType<T> extends ResponseApi{
 }
 
 export interface ResponseApiSimple<T> extends ResponseApi{
-    result:T    
+    result:T
 }
 
 export interface ResponseApiCat<T> extends ResponseApi{
@@ -37,13 +35,5 @@ export interface Pagination{
 
 export interface ResponseAuth{
     user:User,
-    token:string,    
-}
-
-export interface CatalogoMap {
-  categorias: ResponseApiCat<Categoria>;
-  categorias_gastos: ResponseApiCat<Categoria>;
-  categorias_ingresos: ResponseApiCat<Categoria>;
-  ahorros: ResponseApiCat<Ahorro>;
-  // otros catálogos...
+    token:string,
 }

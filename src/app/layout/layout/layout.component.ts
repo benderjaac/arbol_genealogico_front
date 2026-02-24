@@ -7,13 +7,12 @@ import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { MenuComponent } from '../menu/menu.component';
-import { DisponibleComponent } from 'app/modules/finanzas/disponible/disponible.component';
 import { Ripple } from "primeng/ripple";
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [DisponibleComponent, RouterOutlet, CommonModule, ButtonModule, DrawerModule, AvatarModule, PanelMenuModule, MenuComponent, Ripple],
+  imports: [RouterOutlet, CommonModule, ButtonModule, DrawerModule, AvatarModule, PanelMenuModule, MenuComponent, Ripple],
   templateUrl: './layout.component.html',
 })
 export class LayoutComponent {
@@ -29,31 +28,31 @@ export class LayoutComponent {
   ) {
     if(!this.isMobile()){
         this.showSidebar.set(true);
-      } 
+      }
     window.addEventListener('resize', () => {
       this.showSidebar.set(false);
-      this.isMobile.set(window.innerWidth <= 768); 
+      this.isMobile.set(window.innerWidth <= 768);
       if(!this.isMobile()){
         this.showSidebar.set(true);
-      }     
+      }
     });
   }
 
-  ngOnInit():void{  
+  ngOnInit():void{
     const userPref = localStorage.getItem('theme');
     if (userPref === 'dark') {
       this.isDarkMode=true;
       document.documentElement.classList.add('p-dark');
     }
   }
-  
+
   toggleSidebar() {
     this.showSidebar.set(!this.showSidebar());
   }
 
   singOut():void{
-    this._router.navigate(['/sign-out']);  
-  }  
+    this._router.navigate(['/sign-out']);
+  }
 
   toggleTheme(): void {
     if (document.documentElement.classList.contains('p-dark')) {
@@ -65,5 +64,5 @@ export class LayoutComponent {
       localStorage.setItem('theme', 'dark');
       this.isDarkMode=true;
     }
-  }  
+  }
 }

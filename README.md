@@ -1,15 +1,11 @@
-# Sistema de Finanzas Personales - SPA - Angular
+# Sistema de Arbol Genealogico - SPA - Angular
 
-FrontEnd para mi sistema personal de finanzas
+FrontEnd para mi sistema personal de arbol genealógico
 
 ### Caracteristicas del sistema
 
 Administracion de usuarios por medio de permisos y perfiles
 Login | Registro
-Adminstracion de Gastos e ingresos | Consultas, Altas, Actualizacion y Eliminacion
-Administracion de Ahorros | Consultas, Altas, Actualizacion y Eliminacion | Abonos por ahorros
-Administracion de categorias de gastos e ingresos
-Graficas comparativas
 
 ## Instalacion, prerequisitos
 

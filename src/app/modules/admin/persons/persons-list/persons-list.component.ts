@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { ApiSort } from 'app/core/models/query.model';
 import { ResponseApiType } from 'app/core/models/response-api.model';
-import { User } from 'app/core/models/user.model';
 import { FilterService } from 'app/modules/utils/filter.service';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
