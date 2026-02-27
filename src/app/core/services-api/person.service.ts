@@ -27,4 +27,12 @@ export class PersonService {
   createPerson(data:any):Observable<ResponseApiSimple<Person>>{
     return this._httpClient.post<ResponseApiSimple<Person>>(this.urlApi+'/api/persons', data);
   }
+
+  update(id:number, data:Partial<Person>):Observable<ResponseApiSimple<Person>>{
+    return this._httpClient.put<ResponseApiSimple<Person>>(this.urlApi+'/api/persons/'+id, data);
+  }
+
+  delete(id:number):Observable<ResponseApiSimple<null>>{
+    return this._httpClient.delete<ResponseApiSimple<null>>(this.urlApi+'/api/persons/'+id);
+  }
 }

@@ -12,10 +12,14 @@
 
   filterMode="row"
 
-  (onLazyLoad)="getPersonsData($event)"
+  (onLazyLoad)="getDataItems($event)"
 
   [loading]="loading"
-  [tableStyle]="{ 'min-width': '50rem' }">
+  [tableStyle]="{ 'min-width': '50rem' }"
+
+  dataKey="id"
+  editMode="row"
+>
 
   <ng-template pTemplate="caption">
     <div class="flex items-center justify-between">
@@ -42,59 +46,261 @@
           </div>
         </ng-template>
 
-        <ng-template pTemplate="header">
-          <!-- filtros -->
-          @if (showFilters) {
-            <tr>
+  <ng-template pTemplate="header">
+      <tr>
+          <th pSortableColumn="nombreCompleto"><p-sortIcon field="nombreCompleto" /> Nombre completo</th>
+          <th pSortableColumn="alias"><p-sortIcon field="alias" /> Alias</th>
+          <th pSortableColumn="genero"><p-sortIcon field="genero" /> Género</th>
+          <th pSortableColumn="fechaNacimiento"><p-sortIcon field="fechaNacimiento" />fechaNacimiento </th>
+          <th pSortableColumn="lugarNacimiento"><p-sortIcon field="lugarNacimiento" /> lugarNacimiento</th>
+          <th pSortableColumn="notas"><p-sortIcon field="notas" /> Notas</th>
+      </tr>
+     <!-- filtros -->
+      @if (showFilters) {
+          <tr>
               <th>
+                  <input class="border-solid border-2 rounded-full pl-2"
+                         pInputText
+                         type="text"
+                         (input)="onFilterInput($event, 'nombreCompleto', 'contains')"
+                  />
               </th>
               <th>
-                <input class="border-solid border-2 rounded-full pl-2"
-                  pInputText
-                  type="text"
-                  (input)="onFilterInput($event, 'email', 'contains')"
-                  />
-                </th>
-                <th>
                   <input class="border-solid border-2 rounded-full pl-2"
-                    pInputText
-                    type="text"
-                    (input)="onFilterInput($event, 'username', 'contains')"
-                    />
-                  </th>
-                  <th>
-                    <input class="border-solid border-2 rounded-full pl-2"
-                      pInputText
-                      type="text"
-                      (input)="onFilterInput($event, 'perfil.nombre', 'contains')"
-                      />
-                    </th>
-                    <th></th>
-                  </tr>
-                }
-                <tr>
-                  <th pSortableColumn="id"><p-sortIcon field="id" /> ID</th>
-                  <th pSortableColumn="nombreCompleto"><p-sortIcon field="nombreCompleto" /> Nombre</th>
-                  <th pSortableColumn="fechaNacimiento"><p-sortIcon field="fechaNacimiento" />fechaNacimiento </th>
-                  <th pSortableColumn="lugarNacimiento"><p-sortIcon field="lugarNacimiento" /> lugarNacimiento</th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-usuario>
-                <tr>
-                  <td>{{ usuario.id }}</td>
-                  <td>{{ usuario.nombreCompleto }}</td>
-                  <td>{{ usuario.fechaNacimiento }}</td>
-                  <td>{{ usuario.lugarNacimiento }}</td>
-                </tr>
-              </ng-template>
-            </p-table>
+                         pInputText
+                         type="text"
+                         (input)="onFilterInput($event, 'alias', 'contains')"
+                  />
+              </th>
+              <th>
+                  <p-select
+                      class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2 w-full"
+                      [options]="[
+                            { label: 'Todos', value: '' },
+                            { label: 'Masculino', value: 'm' },
+                            { label: 'Femenino', value: 'f' }
+                        ]"
+                      placeholder="Género"
+                      (onChange)="onFilterSelect($event.value, 'genero', 'contains')"
+                      appendTo="body"
+                  ></p-select>
+              </th>
+              <th class="min-w-50">
+                  @if (!filterFecharango){
+                      <p-datePicker
+                          [showIcon]="true"
+                          [placeholder]="'Fecha exacta'"
+                          (onSelect)="onFilterExactDate($event, 'fechaNacimiento')"
+                          dateFormat="yy-mm-dd"
+                          [readonlyInput]="true"
+                          appendTo="body"
+                      ></p-datePicker>
+                      <br>
+                      <span class="text-muted-color text-sm cursor-pointer" (click)="filterFecharango=true">Por rango</span>
+                  } @else {
+                      <p-datePicker
+                          [showIcon]="true"
+                          [placeholder]="'Rango de fecha'"
+                          [(ngModel)]="filtroFechaRango"
+                          (ngModelChange)="onFilterDateRange($event, 'fechaNacimiento')"
+                          dateFormat="yy-mm-dd"
+                          [readonlyInput]="true"
+                          selectionMode="range"
+                          appendTo="body"
+                      ></p-datePicker>
+                      <br>
+                      <span class="text-muted-color text-sm cursor-pointer" (click)="filterFecharango=false">fecha exacta</span>
+                  }
+              </th>
+              <th>
+                  <input class="border-solid border-2 rounded-full pl-2"
+                         pInputText
+                         type="text"
+                         (input)="onFilterInput($event, 'lugarNacimiento', 'contains')"
+                  />
+              </th>
+              <th>
+                  <input class="border-solid border-2 rounded-full pl-2"
+                         pInputText
+                         type="text"
+                         (input)="onFilterInput($event, 'notas', 'contains')"
+                  />
+              </th>
+              <th></th>
+          </tr>
+      }
 
-            <p-dialog
-              [(visible)]="visibleAddUser"
-              [modal]="true"
-              [draggable]="false"
-              styleClass=""
-              [style]="{ width: '40vw' }"
-              [draggable]="false"
-              [resizable]="false">
-            </p-dialog>
+
+    </ng-template>
+
+    <ng-template pTemplate="body" let-persona let-ri="rowIndex">
+        <tr [pEditableRow]="persona">
+            <td>
+                <p-cellEditor>
+                    <ng-template #input class="flex flex-inline">
+                        <input
+                            class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
+                            type="text"
+                            placeholder="Nombre"
+                            [(ngModel)]="persona.nombre" />
+                        <input
+                            class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
+                            type="text"
+                            placeholder="Apellido Paterno"
+                            [(ngModel)]="persona.apellidoPaterno" />
+                        <input
+                            class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
+                            type="text"
+                            placeholder="Apellido Materno"
+                            [(ngModel)]="persona.apellidoMaterno" />
+                    </ng-template>
+                    <ng-template #output>
+                        {{ persona.nombreCompleto }}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td>
+                <p-cellEditor>
+                    <ng-template #input>
+                        <input
+                            class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
+                            pInputText type="text"
+                            [(ngModel)]="persona.alias" />
+                    </ng-template>
+                    <ng-template #output>
+                        {{ persona.alias }}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template #input class="flex flex-inline">
+                        <p-select
+                            class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2 w-full"
+                            [options]="[
+                            { label: 'Masculino', value: 'm' },
+                            { label: 'Femenino', value: 'f' }
+                        ]"
+                            placeholder="Género"
+                            [(ngModel)]="persona.genero"
+                            appendTo="body"
+                        ></p-select>
+                    </ng-template>
+                    <ng-template #output>
+                        {{ getLabelGenero(persona.genero) }}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td class="min-w-50">
+                <p-cellEditor>
+                    <ng-template #input>
+                        <p-datePicker
+                            class="w-full"
+                            id="fechaNacimiento"
+                            [showIcon]="true"
+                            dateFormat="yy-mm-dd"
+                            [readonlyInput]="true"
+                            [(ngModel)]="persona.fechaNacimiento"
+                            appendTo="body"
+                        ></p-datePicker>
+                    </ng-template>
+                    <ng-template #output>
+                        {{ persona.fechaNacimiento }}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template #input>
+                        <input
+                            class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
+                            pInputText type="text"
+                            [(ngModel)]="persona.lugarNacimiento" />
+                    </ng-template>
+                    <ng-template #output>
+                        {{ persona.lugarNacimiento }}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template #input>
+                        <input
+                            class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
+                            pInputText type="text"
+                            [(ngModel)]="persona.notas" />
+                    </ng-template>
+                    <ng-template #output>
+                        {{ persona.notas }}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <div class="flex items-center justify-center gap-2">
+                    <button
+                        *ngIf="!persona.editing"
+                        pButton
+                        type="button"
+                        pInitEditableRow
+                        (click)="onRowEditInit(persona)"
+                        icon="pi pi-pen-to-square"
+                        rounded
+                        text
+                        severity="info"
+                        pTooltip="Editar">
+                    </button>
+                    <p-confirmpopup #cp/>
+                    <button
+                        *ngIf="!persona.editing"
+                        pButton
+                        pRipple
+                        type="button"
+                        (click)="onDelete(persona, $event)"
+                        icon="pi pi-trash"
+                        rounded
+                        text
+                        severity="warn"
+                        pTooltip="Eliminar">
+                    </button>
+                    <button
+                        *ngIf="persona.editing"
+                        pButton
+                        pRipple
+                        type="button"
+                        pSaveEditableRow
+                        icon="pi pi-check"
+                        (click)="onRowEditSave(persona, ri)"
+                        text
+                        rounded
+                        severity="success"
+                        pTooltip="Guardar"
+                    ></button>
+                    <button
+                        *ngIf="persona.editing"
+                        pButton
+                        pRipple
+                        type="button"
+                        pCancelEditableRow
+                        icon="pi pi-times"
+                        (click)="onRowEditCancel(persona, ri)"
+                        text
+                        rounded
+                        severity="secondary"
+                        pTooltip="Cancelar"
+                    ></button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog
+    [(visible)]="visibleAddUser"
+    [modal]="true"
+    [draggable]="false"
+    styleClass=""
+    [style]="{ width: '40vw' }"
+    [draggable]="false"
+    [resizable]="false">
+</p-dialog>

@@ -30,16 +30,16 @@ export class FilterService {
             if (matchMode === 'between' && Array.isArray(filterValue) && filterValue.length === 2) {
               let start = undefined;
               let end = undefined;
-              let type; 
-              if(field==='fecha'){
+              let type;
+              if(field==='fechaNacimiento'){
                 start = filterValue[0].toISOString().split('T')[0];
-                end = filterValue[1].toISOString().split('T')[0];  
+                end = filterValue[1].toISOString().split('T')[0];
                 type ='date';
               }else{
                 start = filterValue[0];
                 end = filterValue[1];
                 type ='number';
-              }              
+              }
 
               filters.push(
                 {
@@ -66,6 +66,9 @@ export class FilterService {
                 case 'equals':
                   operator = '=';
                   type = 'boolean';
+                  if(field==='fechaNacimiento'){
+                    type = 'date';
+                  }
                   break;
               }
 
@@ -82,7 +85,7 @@ export class FilterService {
               });
             }
           }
-        }        
+        }
       }
     }
 
@@ -102,6 +105,6 @@ export class FilterService {
         currentPage: page,
       },
     };
-    
+
   }
 }
