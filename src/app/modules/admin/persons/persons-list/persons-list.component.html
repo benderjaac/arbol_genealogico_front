@@ -21,114 +21,127 @@
   editMode="row"
 >
 
-  <ng-template pTemplate="caption">
-    <div class="flex items-center justify-between">
-      <span class="text-xl font-bold">Personas</span>
-      <button
-        pButton
-        label="Agregar persona"
-        (click)="addUser()"
-        icon="pi pi-user"
-        class="w-40"
-        severity="info" text>
+    <ng-template pTemplate="colgroup">
+        <colgroup>
+            <col style="width:20%">
+            <col style="width:10%">
+            <col style="width:10%">
+            <col style="width:10%">
+            <col style="width:15%">
+            <col style="width:20%">
+            <col style="width:15%">
+        </colgroup>
+    </ng-template>
 
-      </button>
-      <div>
-        <p-button icon="pi pi-eraser"
-          class="mr-2"
-          (click)="resetTable()" rounded raised />
-          <p-button icon="pi pi-filter-fill"
-            class="mr-2"
-            (click)="showHiddeFilters()" rounded raised />
-            <p-button icon="pi pi-refresh"
-              (click)="reloadTable()" rounded raised />
+    <ng-template pTemplate="caption">
+        <div class="flex items-center justify-between">
+            <span class="text-xl font-bold">Personas</span>
+            <button
+                pButton
+                label="Agregar persona"
+                (click)="addUser()"
+                icon="pi pi-user"
+                class="w-40"
+                severity="info" text>
+
+            </button>
+            <div>
+                <p-button icon="pi pi-eraser"
+                          class="mr-2"
+                          (click)="resetTable()" rounded raised />
+                <p-button icon="pi pi-filter-fill"
+                          class="mr-2"
+                          (click)="showHiddeFilters()" rounded raised />
+                <p-button icon="pi pi-refresh"
+                          (click)="reloadTable()" rounded raised />
             </div>
-          </div>
-        </ng-template>
+        </div>
+    </ng-template>
 
-  <ng-template pTemplate="header">
-      <tr>
-          <th pSortableColumn="nombreCompleto"><p-sortIcon field="nombreCompleto" /> Nombre completo</th>
-          <th pSortableColumn="alias"><p-sortIcon field="alias" /> Alias</th>
-          <th pSortableColumn="genero"><p-sortIcon field="genero" /> Género</th>
-          <th pSortableColumn="fechaNacimiento"><p-sortIcon field="fechaNacimiento" />fechaNacimiento </th>
-          <th pSortableColumn="lugarNacimiento"><p-sortIcon field="lugarNacimiento" /> lugarNacimiento</th>
-          <th pSortableColumn="notas"><p-sortIcon field="notas" /> Notas</th>
-      </tr>
-     <!-- filtros -->
-      @if (showFilters) {
-          <tr>
-              <th>
-                  <input class="border-solid border-2 rounded-full pl-2"
-                         pInputText
-                         type="text"
-                         (input)="onFilterInput($event, 'nombreCompleto', 'contains')"
-                  />
-              </th>
-              <th>
-                  <input class="border-solid border-2 rounded-full pl-2"
-                         pInputText
-                         type="text"
-                         (input)="onFilterInput($event, 'alias', 'contains')"
-                  />
-              </th>
-              <th>
-                  <p-select
-                      class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2 w-full"
-                      [options]="[
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="nombreCompleto"><p-sortIcon field="nombreCompleto" /> Nombre completo</th>
+            <th pSortableColumn="alias"><p-sortIcon field="alias" /> Alias</th>
+            <th pSortableColumn="genero"><p-sortIcon field="genero" /> Género</th>
+            <th pSortableColumn="fechaNacimiento"><p-sortIcon field="fechaNacimiento" />Fecha de nacimiento </th>
+            <th pSortableColumn="lugarNacimiento"><p-sortIcon field="lugarNacimiento" /> Lugar de nacimiento</th>
+            <th pSortableColumn="notas"><p-sortIcon field="notas" /> Notas</th>
+            <th>Opciones</th>
+        </tr>
+        <!-- filtros -->
+        @if (showFilters) {
+            <tr>
+                <th>
+                    <input class="border-solid border-2 rounded-full pl-2"
+                           pInputText
+                           type="text"
+                           (input)="onFilterInput($event, 'nombreCompleto', 'contains')"
+                    />
+                </th>
+                <th>
+                    <input class="border-solid border-2 rounded-full pl-2"
+                           pInputText
+                           type="text"
+                           (input)="onFilterInput($event, 'alias', 'contains')"
+                    />
+                </th>
+                <th>
+                    <p-select
+                        class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2 w-full"
+                        [options]="[
                             { label: 'Todos', value: '' },
                             { label: 'Masculino', value: 'm' },
                             { label: 'Femenino', value: 'f' }
                         ]"
-                      placeholder="Género"
-                      (onChange)="onFilterSelect($event.value, 'genero', 'contains')"
-                      appendTo="body"
-                  ></p-select>
-              </th>
-              <th class="min-w-50">
-                  @if (!filterFecharango){
-                      <p-datePicker
-                          [showIcon]="true"
-                          [placeholder]="'Fecha exacta'"
-                          (onSelect)="onFilterExactDate($event, 'fechaNacimiento')"
-                          dateFormat="yy-mm-dd"
-                          [readonlyInput]="true"
-                          appendTo="body"
-                      ></p-datePicker>
-                      <br>
-                      <span class="text-muted-color text-sm cursor-pointer" (click)="filterFecharango=true">Por rango</span>
-                  } @else {
-                      <p-datePicker
-                          [showIcon]="true"
-                          [placeholder]="'Rango de fecha'"
-                          [(ngModel)]="filtroFechaRango"
-                          (ngModelChange)="onFilterDateRange($event, 'fechaNacimiento')"
-                          dateFormat="yy-mm-dd"
-                          [readonlyInput]="true"
-                          selectionMode="range"
-                          appendTo="body"
-                      ></p-datePicker>
-                      <br>
-                      <span class="text-muted-color text-sm cursor-pointer" (click)="filterFecharango=false">fecha exacta</span>
-                  }
-              </th>
-              <th>
-                  <input class="border-solid border-2 rounded-full pl-2"
-                         pInputText
-                         type="text"
-                         (input)="onFilterInput($event, 'lugarNacimiento', 'contains')"
-                  />
-              </th>
-              <th>
-                  <input class="border-solid border-2 rounded-full pl-2"
-                         pInputText
-                         type="text"
-                         (input)="onFilterInput($event, 'notas', 'contains')"
-                  />
-              </th>
-              <th></th>
-          </tr>
-      }
+                        placeholder="Género"
+                        (onChange)="onFilterSelect($event.value, 'genero', 'contains')"
+                        appendTo="body"
+                    ></p-select>
+                </th>
+                <th class="min-w-50">
+                    @if (!filterFecharango){
+                        <p-datePicker
+                            [showIcon]="true"
+                            [placeholder]="'Fecha exacta'"
+                            (onSelect)="onFilterExactDate($event, 'fechaNacimiento')"
+                            dateFormat="yy-mm-dd"
+                            [readonlyInput]="true"
+                            appendTo="body"
+                        ></p-datePicker>
+                        <br>
+                        <span class="text-muted-color text-sm cursor-pointer" (click)="filterFecharango=true">Por rango</span>
+                    } @else {
+                        <p-datePicker
+                            [showIcon]="true"
+                            [placeholder]="'Rango de fecha'"
+                            [(ngModel)]="filtroFechaRango"
+                            (ngModelChange)="onFilterDateRange($event, 'fechaNacimiento')"
+                            dateFormat="yy-mm-dd"
+                            [readonlyInput]="true"
+                            selectionMode="range"
+                            appendTo="body"
+                        ></p-datePicker>
+                        <br>
+                        <span class="text-muted-color text-sm cursor-pointer" (click)="filterFecharango=false">fecha exacta</span>
+                    }
+                </th>
+                <th>
+                    <input class="border-solid border-2 rounded-full pl-2"
+                           pInputText
+                           type="text"
+                           (input)="onFilterInput($event, 'lugarNacimiento', 'contains')"
+                    />
+                </th>
+                <th>
+                    <input class="border-solid border-2 rounded-full pl-2"
+                           pInputText
+                           type="text"
+                           (input)="onFilterInput($event, 'notas', 'contains')"
+                    />
+                </th>
+                <th></th>
+            </tr>
+        }
 
 
     </ng-template>
@@ -250,19 +263,6 @@
                         severity="info"
                         pTooltip="Editar">
                     </button>
-                    <p-confirmpopup #cp/>
-                    <button
-                        *ngIf="!persona.editing"
-                        pButton
-                        pRipple
-                        type="button"
-                        (click)="onDelete(persona, $event)"
-                        icon="pi pi-trash"
-                        rounded
-                        text
-                        severity="warn"
-                        pTooltip="Eliminar">
-                    </button>
                     <button
                         *ngIf="persona.editing"
                         pButton
@@ -289,6 +289,32 @@
                         severity="secondary"
                         pTooltip="Cancelar"
                     ></button>
+                    <p-confirmpopup #cp/>
+                    <button
+                        *ngIf="persona.editing"
+                        pButton
+                        pRipple
+                        type="button"
+                        (click)="onDelete(persona, $event)"
+                        icon="pi pi-trash"
+                        rounded
+                        text
+                        severity="warn"
+                        pTooltip="Eliminar">
+                    </button>
+
+                    <!--Parejas-->
+                    <button
+                        *ngIf="!persona.editing"
+                        pButton
+                        type="button"
+                        (click)="showParejas(persona)"
+                        icon="pi pi-users"
+                        rounded
+                        text
+                        severity="info"
+                        pTooltip="Ver parejas">
+                    </button>
                 </div>
             </td>
         </tr>
@@ -296,11 +322,24 @@
 </p-table>
 
 <p-dialog
-    [(visible)]="visibleAddUser"
+    [(visible)]="visibleModalPerson"
     [modal]="true"
     [draggable]="false"
-    styleClass=""
     [style]="{ width: '40vw' }"
-    [draggable]="false"
     [resizable]="false">
+</p-dialog>
+
+<p-dialog
+    [(visible)]="visibleModalParejas"
+    [modal]="true"
+    [draggable]="false"
+    [style]="{ width: '40vw' }"
+    [resizable]="false">
+    @if (visibleModalParejas) {
+        <app-parejas-modal
+            [persona]="personSelected!"
+            (msjEvent)="mostrarMensaje($event)"
+            (cerrarDialog)="closeDialogParejas($event)">
+        </app-parejas-modal>
+    }
 </p-dialog>

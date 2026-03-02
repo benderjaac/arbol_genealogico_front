@@ -17,10 +17,13 @@ import {Select} from 'primeng/select';
 import {Genero} from '../../../../core/enums/enums';
 import {ConfirmPopup} from 'primeng/confirmpopup';
 import {NgIf} from '@angular/common';
+import {Tooltip} from 'primeng/tooltip';
+import {UsersCreateComponent} from '../../users/users-create/users-create.component';
+import {ParejasModalComponent} from '../parejas-modal/parejas-modal.component';
 
 @Component({
   selector: 'app-users-list',
-  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, NgIf],
+  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, NgIf, Tooltip, ParejasModalComponent],
   templateUrl: './persons-list.component.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -40,7 +43,9 @@ export class PersonsListComponent {
 
   loading = false;
 
-  visibleAddUser = false;
+  visibleModalPerson = false;
+  visibleModalParejas = false;
+  personSelected:Person|null = null;
 
   filtroFechaRango: Date[] = [];
   filterFecharango=false;
@@ -135,14 +140,14 @@ export class PersonsListComponent {
   }
 
   addUser():void{
-    this.visibleAddUser=true;
+    this.visibleModalPerson=true;
   }
 
-  closeDialog(update:boolean) {
-      this.visibleAddUser = false;
-      if(update){
-        this.reloadTable();
-      }
+  closeDialogPerson(update:boolean) {
+    this.visibleModalPerson = false;
+    if(update){
+      this.reloadTable();
+    }
   }
 
   mostrarMensaje(detalle: {tipo:string, mensaje:string}) {
@@ -280,7 +285,19 @@ export class PersonsListComponent {
           this.onRowEditCancel(persona, ri);
         }
       });
+  }
 
+  showParejas(persona: Person):void{
+    this.personSelected=persona;
+    this.visibleModalParejas=true;
+  }
+
+  closeDialogParejas(update:boolean) {
+    this.visibleModalParejas = false;
+    this.personSelected = null;
+    if(update){
+      this.reloadTable();
+    }
   }
 
 }

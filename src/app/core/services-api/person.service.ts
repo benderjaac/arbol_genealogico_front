@@ -6,6 +6,7 @@ import { ResponseApiSimple, ResponseApiType } from '../models/response-api.model
 import { User } from '../models/user.model';
 import { ApiQuery } from '../models/query.model';
 import {Person} from '../models/person.model';
+import {UnionSummaryDto} from '../models/UnionSummary.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,9 @@ export class PersonService {
 
   delete(id:number):Observable<ResponseApiSimple<null>>{
     return this._httpClient.delete<ResponseApiSimple<null>>(this.urlApi+'/api/persons/'+id);
+  }
+
+  getParejas(id:number) :Observable<ResponseApiSimple<UnionSummaryDto[]>>{
+    return this._httpClient.get<ResponseApiSimple<UnionSummaryDto[]>>(this.urlApi+'/api/unions/person/'+id);
   }
 }
