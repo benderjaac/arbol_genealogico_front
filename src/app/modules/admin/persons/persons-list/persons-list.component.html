@@ -23,11 +23,11 @@
 
     <ng-template pTemplate="colgroup">
         <colgroup>
+            <col style="width:10%">
+            <col style="width:10%">
+            <col style="width:10%">
+            <col style="width:10%">
             <col style="width:20%">
-            <col style="width:10%">
-            <col style="width:10%">
-            <col style="width:10%">
-            <col style="width:15%">
             <col style="width:20%">
             <col style="width:15%">
         </colgroup>
@@ -69,8 +69,8 @@
 
     <ng-template pTemplate="header">
         <tr>
+            <th><p-iconfield></p-iconfield></th>
             <th pSortableColumn="nombreCompleto"><p-sortIcon field="nombreCompleto" /> Nombre completo</th>
-            <th pSortableColumn="alias"><p-sortIcon field="alias" /> Alias</th>
             <th pSortableColumn="genero"><p-sortIcon field="genero" /> Género</th>
             <th pSortableColumn="fechaNacimiento"><p-sortIcon field="fechaNacimiento" />Fecha de nacimiento </th>
             <th pSortableColumn="lugarNacimiento"><p-sortIcon field="lugarNacimiento" /> Lugar de nacimiento</th>
@@ -80,6 +80,7 @@
         <!-- filtros -->
         @if (showFilters) {
             <tr>
+                <th></th>
                 <th>
                     <input
                         #inputNombreCompleto
@@ -87,13 +88,6 @@
                         pInputText
                         type="text"
                         (input)="onFilterInput($event, 'nombreCompleto', 'contains')"
-                    />
-                </th>
-                <th>
-                    <input class="border-solid border-2 rounded-full pl-2"
-                           pInputText
-                           type="text"
-                           (input)="onFilterInput($event, 'alias', 'contains')"
                     />
                 </th>
                 <th>
@@ -162,6 +156,20 @@
             <td>
                 <p-cellEditor>
                     <ng-template #input class="flex flex-inline">
+
+                    </ng-template>
+                    <ng-template #output class="flex flex-inline">
+                        @if (persona.foto!==null && persona.foto!==""){
+                            <img [src]="persona.foto" class="w-24 rounded"  alt=""/>
+                        } @else{
+                            <img [src]="`img/sin_foto_${persona.genero}.png`" class="w-24 rounded"  alt=""/>
+                        }
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template #input class="flex flex-inline">
                         <input
                             class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
                             type="text"
@@ -180,20 +188,6 @@
                     </ng-template>
                     <ng-template #output>
                         {{ persona.nombreCompleto }}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-
-            <td>
-                <p-cellEditor>
-                    <ng-template #input>
-                        <input
-                            class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
-                            pInputText type="text"
-                            [(ngModel)]="persona.alias" />
-                    </ng-template>
-                    <ng-template #output>
-                        {{ persona.alias }}
                     </ng-template>
                 </p-cellEditor>
             </td>
@@ -262,70 +256,68 @@
             </td>
             <td>
                 <div class="flex items-center justify-center gap-2">
-                    <button
-                        *ngIf="!persona.editing"
-                        pButton
-                        type="button"
-                        pInitEditableRow
-                        (click)="onRowEditInit(persona)"
-                        icon="pi pi-pen-to-square"
-                        rounded
-                        text
-                        severity="info"
-                        pTooltip="Editar">
-                    </button>
-                    <button
-                        *ngIf="persona.editing"
-                        pButton
-                        pRipple
-                        type="button"
-                        pSaveEditableRow
-                        icon="pi pi-check"
-                        (click)="onRowEditSave(persona, ri)"
-                        text
-                        rounded
-                        severity="success"
-                        pTooltip="Guardar"
-                    ></button>
-                    <button
-                        *ngIf="persona.editing"
-                        pButton
-                        pRipple
-                        type="button"
-                        pCancelEditableRow
-                        icon="pi pi-times"
-                        (click)="onRowEditCancel(persona, ri)"
-                        text
-                        rounded
-                        severity="secondary"
-                        pTooltip="Cancelar"
-                    ></button>
-                    <p-confirmpopup #cp/>
-                    <button
-                        *ngIf="persona.editing"
-                        pButton
-                        pRipple
-                        type="button"
-                        (click)="onDelete(persona, $event)"
-                        icon="pi pi-trash"
-                        rounded
-                        text
-                        severity="warn"
-                        pTooltip="Eliminar">
-                    </button>
-
-                    <!--Parejas-->
-                    <button
-                        *ngIf="!persona.editing"
-                        pButton
-                        type="button"
-                        (click)="showParejas(persona)"
-                        icon="pi pi-users"
-                        rounded
-                        text
-                        severity="info"
-                        pTooltip="Ver parejas">
-                    </button>
+                    @if(!persona.editing){
+                        <!--editar-->
+                        <button
+                            pButton
+                            type="button"
+                            pInitEditableRow
+                            (click)="onRowEditInit(persona)"
+                            icon="pi pi-pen-to-square"
+                            rounded
+                            text
+                            severity="info"
+                            pTooltip="Editar">
+                        </button>
+                        <!--Parejas-->
+                        <button
+                            pButton
+                            type="button"
+                            (click)="showParejas(persona)"
+                            icon="pi pi-users"
+                            rounded
+                            text
+                            severity="info"
+                            pTooltip="Ver parejas">
+                        </button>
+                    } @else {
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            pSaveEditableRow
+                            icon="pi pi-check"
+                            (click)="onRowEditSave(persona, ri)"
+                            text
+                            rounded
+                            severity="success"
+                            pTooltip="Guardar"
+                        ></button>
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            pCancelEditableRow
+                            icon="pi pi-times"
+                            (click)="onRowEditCancel(persona, ri)"
+                            text
+                            rounded
+                            severity="secondary"
+                            pTooltip="Cancelar"
+                        ></button>
+                        <p-confirmpopup #cp/>
+                        <button
+                            pButton
+                            pRipple
+                            type="button"
+                            (click)="onDelete(persona, $event)"
+                            icon="pi pi-trash"
+                            rounded
+                            text
+                            severity="warn"
+                            pTooltip="Eliminar">
+                        </button>
+                    }
                 </div>
             </td>
         </tr>

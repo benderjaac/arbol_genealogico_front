@@ -12,5 +12,6 @@ export interface Person{
   genero:keyof typeof Genero,
   lugarNacimiento:string,
   notas:string,
+  foto:string,
   editing?: boolean,
 }

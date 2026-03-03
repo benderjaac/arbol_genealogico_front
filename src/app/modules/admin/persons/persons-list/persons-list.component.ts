@@ -16,15 +16,15 @@ import {FormsModule} from '@angular/forms';
 import {Select} from 'primeng/select';
 import {Genero} from '../../../../core/enums/enums';
 import {ConfirmPopup} from 'primeng/confirmpopup';
-import {NgIf} from '@angular/common';
 import {Tooltip} from 'primeng/tooltip';
-import {UsersCreateComponent} from '../../users/users-create/users-create.component';
 import {ParejasModalComponent} from '../parejas-modal/parejas-modal.component';
 import {InputText} from 'primeng/inputtext';
+import {Ripple} from 'primeng/ripple';
+import {IconField} from 'primeng/iconfield';
 
 @Component({
   selector: 'app-users-list',
-  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, NgIf, Tooltip, ParejasModalComponent, InputText],
+  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, Tooltip, ParejasModalComponent, InputText, Ripple, IconField],
   templateUrl: './persons-list.component.html',
   providers: [ConfirmationService, MessageService]
 })
