@@ -46,14 +46,23 @@
 
             </button>
             <div>
-                <p-button icon="pi pi-eraser"
-                          class="mr-2"
-                          (click)="resetTable()" rounded raised />
-                <p-button icon="pi pi-filter-fill"
-                          class="mr-2"
-                          (click)="showHiddeFilters()" rounded raised />
-                <p-button icon="pi pi-refresh"
-                          (click)="reloadTable()" rounded raised />
+                <p-button
+                    icon="pi pi-eraser"
+                    class="mr-2"
+                    (click)="resetTable()" rounded raised
+                    [pTooltip]="'Borrar filtros'"
+                />
+                <p-button
+                    icon="pi pi-filter-fill"
+                    class="mr-2"
+                    (click)="showHiddeFilters()" rounded raised
+                    [pTooltip]="'Mostrar/ocultar Filtros'"
+                />
+                <p-button
+                    icon="pi pi-refresh"
+                    (click)="reloadTable()" rounded raised
+                    [pTooltip]="'Actualizar'"
+                />
             </div>
         </div>
     </ng-template>
@@ -72,10 +81,12 @@
         @if (showFilters) {
             <tr>
                 <th>
-                    <input class="border-solid border-2 rounded-full pl-2"
-                           pInputText
-                           type="text"
-                           (input)="onFilterInput($event, 'nombreCompleto', 'contains')"
+                    <input
+                        #inputNombreCompleto
+                        class="border-solid border-2 rounded-full pl-2"
+                        pInputText
+                        type="text"
+                        (input)="onFilterInput($event, 'nombreCompleto', 'contains')"
                     />
                 </th>
                 <th>

@@ -1,5 +1,5 @@
 
-import {ChangeDetectorRef, Component, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
 import { ApiSort } from 'app/core/models/query.model';
 import { ResponseApiType } from 'app/core/models/response-api.model';
 import { FilterService } from 'app/modules/utils/filter.service';
@@ -20,16 +20,18 @@ import {NgIf} from '@angular/common';
 import {Tooltip} from 'primeng/tooltip';
 import {UsersCreateComponent} from '../../users/users-create/users-create.component';
 import {ParejasModalComponent} from '../parejas-modal/parejas-modal.component';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-users-list',
-  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, NgIf, Tooltip, ParejasModalComponent],
+  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, NgIf, Tooltip, ParejasModalComponent, InputText],
   templateUrl: './persons-list.component.html',
   providers: [ConfirmationService, MessageService]
 })
 export class PersonsListComponent {
 
   @ViewChild('dt') dt!: Table;
+  @ViewChild('inputNombreCompleto') inputNombreCompleto!: ElementRef;
 
   personas : Person[] = [];
   totalRecords = 0;
@@ -107,6 +109,11 @@ export class PersonsListComponent {
         this.lastEvent.filters={};
         this.getDataItems(this.lastEvent);
       }
+    }else{
+      setTimeout(() => {
+        this.inputNombreCompleto.nativeElement.focus();
+      }, 250);
+
     }
   }
 
