@@ -29,7 +29,7 @@ export class PersonService {
     return this._httpClient.post<ResponseApiSimple<Person>>(this.urlApi+'/api/persons', data);
   }
 
-  update(id:number, data:Partial<Person>):Observable<ResponseApiSimple<Person>>{
+  update(id:number, data:FormData):Observable<ResponseApiSimple<Person>>{
     return this._httpClient.put<ResponseApiSimple<Person>>(this.urlApi+'/api/persons/'+id, data);
   }
 
@@ -39,5 +39,9 @@ export class PersonService {
 
   getParejas(id:number) :Observable<ResponseApiSimple<UnionSummaryDto[]>>{
     return this._httpClient.get<ResponseApiSimple<UnionSummaryDto[]>>(this.urlApi+'/api/unions/person/'+id);
+  }
+
+  create(formData: FormData):Observable<ResponseApiSimple<Person>>{
+    return this._httpClient.post<ResponseApiSimple<Person>>(this.urlApi+'/api/persons', formData);
   }
 }

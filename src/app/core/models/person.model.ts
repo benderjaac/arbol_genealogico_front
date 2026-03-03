@@ -12,6 +12,16 @@ export interface Person{
   genero:keyof typeof Genero,
   lugarNacimiento:string,
   notas:string,
-  foto:string,
+  photoUrl:string,
   editing?: boolean,
+}
+
+export interface PersonCreateDto {
+  nombre: string;
+  apellidoPaterno: string;
+  apellidoMaterno: string;
+  fechaNacimiento: Date;
+  genero: string;
+  lugarNacimiento: string;
+  notas: string;
 }

@@ -39,7 +39,7 @@
             <button
                 pButton
                 label="Agregar persona"
-                (click)="addUser()"
+                (click)="addPerson()"
                 icon="pi pi-user"
                 class="w-40"
                 severity="info" text>
@@ -156,11 +156,21 @@
             <td>
                 <p-cellEditor>
                     <ng-template #input class="flex flex-inline">
+                        <input
+                            type="file"
+                            accept="image/*"
+                            (change)="onFileSelected($event, persona)">
+
+                        @if (previewUrls[persona.id]) {
+                            <img [src]="previewUrls[persona.id]" class="preview-img"  alt=""/>
+                        }
 
                     </ng-template>
                     <ng-template #output class="flex flex-inline">
-                        @if (persona.foto!==null && persona.foto!==""){
-                            <img [src]="persona.foto" class="w-24 rounded"  alt=""/>
+                        @if (persona.photoUrl!==null && persona.photoUrl!==""){
+                            <img [src]="persona.photoUrl"
+                                 class="w-24 rounded"
+                                 alt="">
                         } @else{
                             <img [src]="`img/sin_foto_${persona.genero}.png`" class="w-24 rounded"  alt=""/>
                         }
@@ -330,6 +340,12 @@
     [draggable]="false"
     [style]="{ width: '40vw' }"
     [resizable]="false">
+    @if (visibleModalPerson) {
+        <app-persons-create
+            (msjEvent)="mostrarMensaje($event)"
+            (cerrarDialog)="closeDialogParejas($event)">
+        </app-persons-create>
+    }
 </p-dialog>
 
 <p-dialog

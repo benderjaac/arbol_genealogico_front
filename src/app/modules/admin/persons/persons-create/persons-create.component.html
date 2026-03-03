@@ -1,0 +1,114 @@
+<h2 class="text-2xl font-semibold text-center mb-6">Agregar persona</h2>
+<!-- ============================= -->
+<!-- CREAR NUEVA PERSONA -->
+<!-- ============================= -->
+<div class="mt-3">
+    <form [formGroup]="form" class="p-fluid">
+        <div class="grid sm:grid-cols-2 gap-4">
+            <div class="field">
+                <label class="block text-sm font-medium mb-1">Nombre</label>
+                <input
+                    class="w-full"
+                    pInputText formControlName="nombre">
+                @if (form.get('nombre')?.hasError('required') && form.get('nombre')?.touched) {
+                    <small class="text-red-500">
+                        Ingrese el nombre
+                    </small>
+                }
+            </div>
+
+            <div class="field">
+                <label class="block text-sm font-medium mb-1">Apellido Paterno</label>
+                <input
+                    class="w-full"
+                    pInputText formControlName="apellidoPaterno">
+                @if (form.get('apellidoPaterno')?.hasError('required') && form.get('apellidoPaterno')?.touched) {
+                    <small class="text-red-500">
+                        Ingrese el apellido paterno
+                    </small>
+                }
+            </div>
+
+            <div class="field">
+                <label class="block text-sm font-medium mb-1">Apellido Materno</label>
+                <input
+                    class="w-full"
+                    pInputText formControlName="apellidoMaterno">
+            </div>
+
+            <div class="field">
+                <label class="block text-sm font-medium mb-1">Género</label>
+                <p-select
+                    required
+                    class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2 w-full"
+                    [options]="[
+                            { label: 'Masculino', value: 'm' },
+                            { label: 'Femenino', value: 'f' }
+                        ]"
+                    placeholder="Seleccione género"
+                    formControlName="genero"
+                    appendTo="body"
+                ></p-select>
+                @if (form.get('genero')?.hasError('required') && form.get('genero')?.touched) {
+                    <small class="text-red-500">
+                        Seleccione género
+                    </small>
+                }
+            </div>
+
+            <div class="field">
+                <label class="block text-sm font-medium mb-1">Fecha de nacimiento</label>
+                <p-datePicker
+                    [showIcon]="true"
+                    [placeholder]="'Fecha nacimiento'"
+                    formControlName="fechaNacimiento"
+                    dateFormat="yy-mm-dd"
+                    [readonlyInput]="true"
+                    appendTo="body"
+                ></p-datePicker>
+            </div>
+
+            <div class="field">
+                <label class="block text-sm font-medium mb-1">Lugar de nacimiento</label>
+                <input
+                    class="w-full"
+                    pInputText formControlName="lugarNacimiento">
+            </div>
+
+            <div class="field">
+                <label class="block text-sm font-medium mb-1">Notas</label>
+                <input
+                    class="w-full"
+                    pInputText formControlName="notas">
+            </div>
+
+            <div class="field">
+                <label class="block text-sm font-medium mb-1">Foto</label>
+
+                <input
+                    class="w-full"
+                    type="file"
+                       accept="image/*"
+                       (change)="onFileSelected($event)">
+
+                @if (previewUrl){
+                    <img
+                        [src]="previewUrl"
+                        class="preview-img" alt="">
+                }
+            </div>
+        </div>
+        <div class="flex justify-content-end mt-4 gap-2">
+
+            <button
+                pButton
+                label="Guardar"
+                class="p-button-text w-full"
+                [disabled]="form.invalid"
+                severity="success"
+                (click)="crearPersona()">
+            </button>
+
+        </div>
+    </form>
+</div>

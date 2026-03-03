@@ -21,10 +21,11 @@ import {ParejasModalComponent} from '../parejas-modal/parejas-modal.component';
 import {InputText} from 'primeng/inputtext';
 import {Ripple} from 'primeng/ripple';
 import {IconField} from 'primeng/iconfield';
+import {PersonsCreateComponent} from '../persons-create/persons-create.component';
 
 @Component({
   selector: 'app-users-list',
-  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, Tooltip, ParejasModalComponent, InputText, Ripple, IconField],
+  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, Tooltip, ParejasModalComponent, InputText, Ripple, IconField, PersonsCreateComponent],
   templateUrl: './persons-list.component.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -52,6 +53,9 @@ export class PersonsListComponent {
   filtroFechaRango: Date[] = [];
   filterFecharango=false;
   clonedItems: { [s: string]: Person } = {};
+
+  selectedFiles: { [key: string]: File } = {};
+  previewUrls: { [key: string]: string } = {};
 
   public readonly Genero = Genero;
 
@@ -146,10 +150,6 @@ export class PersonsListComponent {
     this.getDataItems(event);
   }
 
-  addUser():void{
-    this.visibleModalPerson=true;
-  }
-
   closeDialogPerson(update:boolean) {
     this.visibleModalPerson = false;
     if(update){
@@ -189,6 +189,9 @@ export class PersonsListComponent {
   onRowEditInit(persona: Person) {
     this.cancelAllActiveEditions();
     this.clonedItems[persona.id as unknown as string] = { ...persona };
+    if(persona.photoUrl!==null){
+      //this.previewUrl=??
+    }
     persona.editing = true;
   }
 
@@ -259,6 +262,8 @@ export class PersonsListComponent {
   onRowEditSave(persona: Person, ri: number) {
     persona.fechaNacimiento= new Date(persona.fechaNacimiento).toISOString().split('T')[0];
 
+    const formData = new FormData();
+
     const values = {
       nombre: persona.nombre,
       apellidoPaterno: persona.apellidoPaterno,
@@ -270,7 +275,17 @@ export class PersonsListComponent {
       notas: persona.notas,
     };
 
-    this._personService.update(persona.id, values)
+    formData.append(
+      'person',
+      new Blob([JSON.stringify(values)], { type: 'application/json' })
+    );
+
+    const file = this.selectedFiles[persona.id!];
+    if (file) {
+      formData.append('photo', file);
+    }
+
+    this._personService.update(persona.id, formData)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
@@ -280,6 +295,11 @@ export class PersonsListComponent {
             detail: res.message
           });
           persona.editing = false;
+          if (file) {
+            persona.photoUrl = res.result.photoUrl; // backend debe devolver nueva url
+            delete this.selectedFiles[persona.id!];
+            delete this.previewUrls[persona.id!];
+          }
           persona.nombreCompleto = res.result.nombreCompleto;
           delete this.clonedItems[persona.id as unknown as string];
         },
@@ -307,4 +327,20 @@ export class PersonsListComponent {
     }
   }
 
+  addPerson() {
+    this.visibleModalPerson=true;
+  }
+
+  onFileSelected(event: any, persona:Person) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    this.selectedFiles[persona.id!] = file;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.previewUrls[persona.id!] = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
 }
