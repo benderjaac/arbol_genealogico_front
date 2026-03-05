@@ -4,3 +4,6 @@
 @use "primeicons/primeicons.css";
 @plugin "tailwindcss-primeui";
 @layer tailwind, primeng;
+
+/*Tema propio*/
+@import "./styles/primeng-theme.css";

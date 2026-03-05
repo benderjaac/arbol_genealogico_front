@@ -267,7 +267,6 @@ export class PersonsListComponent {
       nombre: persona.nombre,
       apellidoPaterno: persona.apellidoPaterno,
       apellidoMaterno: persona.apellidoMaterno,
-      alias: persona.alias,
       fechaNacimiento: persona.fechaNacimiento,
       genero: persona.genero,
       lugarNacimiento: persona.lugarNacimiento,

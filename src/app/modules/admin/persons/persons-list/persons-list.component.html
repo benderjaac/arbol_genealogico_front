@@ -1,23 +1,25 @@
 <p-toast />
 <p-table #dt
-  [value]="personas"
-  [lazy]="true"
+         stripedRows
+         showGridlines
+         [value]="personas"
+         [lazy]="true"
 
-  [paginator]="true"
-  [rowsPerPageOptions]="rowsPerPageOptions"
-  [rows]="rowsDefault"
-  [totalRecords]="totalRecords"
-  [showCurrentPageReport]="true"
-  currentPageReportTemplate="Mostrando de {first} a {last} del total {totalRecords} personas"
+         [paginator]="true"
+         [rowsPerPageOptions]="rowsPerPageOptions"
+         [rows]="rowsDefault"
+         [totalRecords]="totalRecords"
+         [showCurrentPageReport]="true"
+         currentPageReportTemplate="Mostrando de {first} a {last} del total {totalRecords} personas"
 
-  filterMode="row"
+         filterMode="row"
 
-  (onLazyLoad)="getDataItems($event)"
+         (onLazyLoad)="getDataItems($event)"
 
-  [loading]="loading"
+         [loading]="loading"
 
-  dataKey="id"
-  editMode="row"
+         dataKey="id"
+         editMode="row"
 >
     <ng-template pTemplate="caption">
         <div class="flex items-center justify-between">
@@ -242,7 +244,7 @@
                 <p-cellEditor>
                     <ng-template #input>
                         <input
-                            class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
+                            class="max-w-40 border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
                             pInputText type="text"
                             [(ngModel)]="persona.notas" />
                     </ng-template>

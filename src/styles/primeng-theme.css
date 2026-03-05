@@ -1,0 +1,80 @@
+/* =========================================
+   PRIMENG DESIGN TOKENS
+========================================= */
+
+:root {
+
+    /* ================= COLOR PRIMARIO ================= */
+    --p-primary-color: #0A96CC;
+    --p-primary-contrast-color: #ffffff;
+
+    /* ================= BUTTONS ================= */
+
+    --p-button-border-radius: 0.75rem;
+
+    /* ================= INPUTS ================= */
+
+    --p-inputtext-border-radius: 0.5rem;
+
+    /* ================= TABLE ================= */
+
+    --p-datatable-header-background: #ffffff;
+    --p-datatable-header-color: #9d2449;
+    --p-datatable-header-border-color: #e5e7eb;
+
+    --p-datatable-row-hover-background: #f8fafc;
+
+    --p-datatable-header-cell-padding: 1rem 0.75rem;
+    --p-datatable-body-cell-padding: 1rem 0.75rem;
+
+    /* ================= PAGINATOR ================= */
+
+    --p-paginator-background: transparent;
+    --p-paginator-border-radius: 0.5rem;
+
+    /* ================= DIALOG ================= */
+
+    --p-dialog-border-radius: 1rem;
+
+    /* ================= OVERLAY ================= */
+
+    --p-overlay-background: #ffffff;
+
+    --p-datatable-row-background: #ffffff;
+    --p-datatable-row-striped-background: #fafafa;
+
+}
+
+
+
+
+
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+.p-dark {
+
+    /* ================= TABLE ================= */
+
+    --p-datatable-header-background: #2f2f2f;
+    --p-datatable-header-color: #e5e7eb;
+    --p-datatable-header-border-color: #444;
+
+    --p-datatable-row-hover-background: #262626;
+
+    /* ================= INPUTS ================= */
+
+    --p-inputtext-background: #1f1f1f;
+    --p-inputtext-border-color: #444;
+    --p-inputtext-color: #e5e7eb;
+
+    /* ================= OVERLAY ================= */
+
+    --p-overlay-background: #1f1f1f;
+
+    /* ================= hover elegante y zebra rows. ======================== */
+    --p-datatable-row-background: #1f1f1f;
+    --p-datatable-row-striped-background: #262626;
+}
