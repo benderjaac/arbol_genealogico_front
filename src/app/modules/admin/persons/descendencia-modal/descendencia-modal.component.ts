@@ -12,11 +12,11 @@ import {UnionService} from '../../../../core/services-api/union.service';
 import {Table, TableModule} from 'primeng/table';
 
 @Component({
-  selector: 'app-parejas-modal',
+  selector: 'app-descendencia-modal',
   imports: [AutoFocusModule, ReactiveFormsModule, InputTextModule, ButtonModule, TableModule],
-  templateUrl: './parejas-modal.component.html',
+  templateUrl: './descendencia-modal.component.html',
 })
-export class ParejasModalComponent {
+export class DescendenciaModalComponent {
   @Output() msjEvent = new EventEmitter<{tipo:string, mensaje:string}>();
   @Output() cerrarDialog = new EventEmitter<boolean>();
 

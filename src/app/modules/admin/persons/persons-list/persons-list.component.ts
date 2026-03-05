@@ -17,7 +17,7 @@ import {Select} from 'primeng/select';
 import {Genero} from '../../../../core/enums/enums';
 import {ConfirmPopup} from 'primeng/confirmpopup';
 import {Tooltip} from 'primeng/tooltip';
-import {ParejasModalComponent} from '../parejas-modal/parejas-modal.component';
+import {DescendenciaModalComponent} from '../descendencia-modal/descendencia-modal.component';
 import {InputText} from 'primeng/inputtext';
 import {Ripple} from 'primeng/ripple';
 import {IconField} from 'primeng/iconfield';
@@ -25,7 +25,7 @@ import {PersonsCreateComponent} from '../persons-create/persons-create.component
 
 @Component({
   selector: 'app-users-list',
-  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, Tooltip, ParejasModalComponent, InputText, Ripple, IconField, PersonsCreateComponent],
+  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, Tooltip, DescendenciaModalComponent, InputText, Ripple, IconField, PersonsCreateComponent],
   templateUrl: './persons-list.component.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -47,7 +47,7 @@ export class PersonsListComponent {
   loading = false;
 
   visibleModalPerson = false;
-  visibleModalParejas = false;
+  visibleModalDescendencia = false;
   personSelected:Person|null = null;
 
   filtroFechaRango: Date[] = [];
@@ -313,13 +313,13 @@ export class PersonsListComponent {
       });
   }
 
-  showParejas(persona: Person):void{
+  showDescendencia(persona: Person):void{
     this.personSelected=persona;
-    this.visibleModalParejas=true;
+    this.visibleModalDescendencia=true;
   }
 
-  closeDialogParejas(update:boolean) {
-    this.visibleModalParejas = false;
+  closeDialogDescendencia(update:boolean) {
+    this.visibleModalDescendencia = false;
     this.personSelected = null;
     if(update){
       this.reloadTable();

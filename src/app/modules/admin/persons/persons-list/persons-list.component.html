@@ -270,12 +270,12 @@
                         <button
                             pButton
                             type="button"
-                            (click)="showParejas(persona)"
+                            (click)="showDescendencia(persona)"
                             icon="pi pi-users"
                             rounded
                             text
                             severity="info"
-                            pTooltip="Ver parejas">
+                            pTooltip="Descendencia">
                         </button>
                     } @else {
                         <button
@@ -324,7 +324,7 @@
 <p-dialog
     [(visible)]="visibleModalPerson"
     [modal]="true"
-    [draggable]="false"
+    [draggable]="true"
     [style]="{ width: '40vw' }"
     [resizable]="false">
     @if (visibleModalPerson) {
@@ -336,16 +336,16 @@
 </p-dialog>
 
 <p-dialog
-    [(visible)]="visibleModalParejas"
+    [(visible)]="visibleModalDescendencia"
     [modal]="true"
     [draggable]="false"
-    [style]="{ width: '40vw' }"
+    [style]="{ width: '90vw' }"
     [resizable]="false">
-    @if (visibleModalParejas) {
-        <app-parejas-modal
+    @if (visibleModalDescendencia) {
+        <app-descendencia-modal
             [persona]="personSelected!"
             (msjEvent)="mostrarMensaje($event)"
-            (cerrarDialog)="closeDialogParejas($event)">
-        </app-parejas-modal>
+            (cerrarDialog)="closeDialogDescendencia($event)">
+        </app-descendencia-modal>
     }
 </p-dialog>
