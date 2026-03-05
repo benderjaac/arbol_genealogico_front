@@ -27,7 +27,7 @@
   </ng-template>
 </p-drawer>
 
-<div class="flex h-screen" [ngClass]="{'ml-80 transition-all': showSidebar() && !isMobile()}">
+<div class="flex h-screen" [ngClass]="{'ml-80 transition-[margin] duration-200': showSidebar() && !isMobile()}">
   <div class="flex flex-col flex-1">
     <!-- Header -->
     <div class="flex justify-between items-center p-4 shadow-md">
@@ -63,7 +63,7 @@
     </div>
 
     <!-- Zona de trabajo -->
-    <main class="flex-1 p-4 overflow-auto">
+    <main class="flex-1 p-4 overflow-auto relative">
       <router-outlet></router-outlet>
     </main>
   </div>

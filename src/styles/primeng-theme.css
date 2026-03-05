@@ -25,7 +25,7 @@
     --p-datatable-row-hover-background: #f8fafc;
 
     --p-datatable-header-cell-padding: 1rem 0.75rem;
-    --p-datatable-body-cell-padding: 1rem 0.75rem;
+    --p-datatable-body-cell-padding: 0.2rem 0.2rem;
 
     /* ================= PAGINATOR ================= */
 

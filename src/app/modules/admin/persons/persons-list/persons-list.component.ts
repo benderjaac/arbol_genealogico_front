@@ -22,10 +22,11 @@ import {InputText} from 'primeng/inputtext';
 import {Ripple} from 'primeng/ripple';
 import {IconField} from 'primeng/iconfield';
 import {PersonsCreateComponent} from '../persons-create/persons-create.component';
+import {TieredMenu} from 'primeng/tieredmenu';
 
 @Component({
   selector: 'app-users-list',
-  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, Tooltip, DescendenciaModalComponent, InputText, Ripple, IconField, PersonsCreateComponent],
+  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, Tooltip, DescendenciaModalComponent, InputText, Ripple, IconField, PersonsCreateComponent, TieredMenu],
   templateUrl: './persons-list.component.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -56,6 +57,8 @@ export class PersonsListComponent {
 
   selectedFiles: { [key: string]: File } = {};
   previewUrls: { [key: string]: string } = {};
+
+  actionsMenuItems: any[] = [];
 
   public readonly Genero = Genero;
 
@@ -342,4 +345,61 @@ export class PersonsListComponent {
     };
     reader.readAsDataURL(file);
   }
+
+  openActionsMenu(event: Event, persona: Person, menu: any) {
+    this.personSelected = persona;
+
+    this.actionsMenuItems = [
+      {
+        label: 'Editar',
+        icon: 'pi pi-pen-to-square',
+        command: () => this.onRowEditInit(persona)
+      },
+      {
+        label: 'Descendencia',
+        icon: 'pi pi-users',
+        command: () => this.showDescendencia(persona)
+      },
+      {
+        separator: true
+      },
+      {
+        label: 'Agregar',
+        icon: 'pi pi-plus',
+        items: [
+          {
+            label: 'Padre',
+            icon: 'pi pi-user-plus',
+            command: () => console.log('comant padre')
+          },
+          {
+            label: 'Madre',
+            icon: 'pi pi-user-plus',
+            command: () => console.log('comant madre')
+          },
+          {
+            label: 'Pareja',
+            icon: 'pi pi-heart',
+            command: () => console.log('comant pareja')
+          },
+          {
+            label: 'Hijo',
+            icon: 'pi pi-users',
+            command: () => console.log('comant hijo')
+          }
+        ]
+      },
+      {
+        separator: true
+      },
+      {
+        label: 'Eliminar',
+        icon: 'pi pi-trash',
+        command: () => console.log('comant delete')
+      }
+    ];
+
+    menu.toggle(event);
+  }
+
 }

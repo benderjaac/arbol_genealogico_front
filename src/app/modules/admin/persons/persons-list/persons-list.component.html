@@ -279,6 +279,25 @@
                             severity="info"
                             pTooltip="Descendencia">
                         </button>
+
+                        <div class="card flex justify-center">
+                            <button
+                                pButton
+                                icon="pi pi-plus"
+                                rounded
+                                text
+                                severity="info"
+                                (click)="openActionsMenu($event, persona, menu)"
+                            ></button>
+
+                            <p-tieredMenu
+                                #menu
+                                [popup]="true"
+                                [model]="actionsMenuItems"
+                                appendTo="body">
+                            </p-tieredMenu>
+                        </div>
+
                     } @else {
                         <button
                             pButton
