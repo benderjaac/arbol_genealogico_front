@@ -22,10 +22,10 @@ import { UsersCreateComponent } from '../users-create/users-create.component';
 export class UsersListComponent {
 
   @ViewChild('dt') dt!: Table;
-  
+
   usuarios : User[] = [];
   totalRecords = 0;
-  
+
   rowsPerPageOptions: number[] = [];
   rowsDefault = 0;
   OrderDefault: ApiSort[] = [{field:'id', order:'DESC'}];
@@ -49,7 +49,7 @@ export class UsersListComponent {
   }
 
   ngOnInit():void{
-    
+
   }
 
   ngOnDestroy():void{
@@ -61,14 +61,14 @@ export class UsersListComponent {
     this.lastEvent=event;
     this.loading = true;
 
-    const ApiQuery = this._filterService.buildQuery(event, this.rowsDefault, this.OrderDefault);    
+    const ApiQuery = this._filterService.buildQuery(event, this.rowsDefault, this.OrderDefault);
     this._userService.getDataUsers(ApiQuery)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res: ResponseApiType<User>)=>{
           this.usuarios = res.result.data;
           this.totalRecords = res.result.pagination.totalItems;
-          this.loading = false;          
+          this.loading = false;
         },
         error: (error)=> {
           this.usuarios=[];
@@ -95,7 +95,7 @@ export class UsersListComponent {
   onFilterInput(event: Event, field: string, tipo:string) {
     const input = event.target as HTMLInputElement;
     this.dt.filter(input.value, field, tipo);
-  } 
+  }
 
   reloadTable():void{
     if (this.lastEvent!=null) {
@@ -139,5 +139,5 @@ export class UsersListComponent {
       life: 3000
     });
   }
-  
+
 }

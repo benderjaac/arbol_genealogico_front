@@ -58,8 +58,8 @@
             <th><p-iconfield></p-iconfield></th>
             <th pSortableColumn="nombreCompleto"><p-sortIcon field="nombreCompleto" /> Nombre completo</th>
             <th pSortableColumn="genero"><p-sortIcon field="genero" /> Género</th>
-            <th pSortableColumn="fechaNacimiento"><p-sortIcon field="fechaNacimiento" />Fecha de nacimiento </th>
-            <th pSortableColumn="lugarNacimiento"><p-sortIcon field="lugarNacimiento" /> Lugar de nacimiento</th>
+            <th pSortableColumn="fechaNacimiento"><p-sortIcon field="fechaNacimiento" />F. Naci. </th>
+            <th pSortableColumn="lugarNacimiento"><p-sortIcon field="lugarNacimiento" /> Lugar Naci.</th>
             <th pSortableColumn="notas"><p-sortIcon field="notas" /> Notas</th>
             <th>Opciones</th>
         </tr>
@@ -143,12 +143,13 @@
                 <p-cellEditor>
                     <ng-template #input class="flex flex-inline">
                         <input
+                            class="w-24"
                             type="file"
                             accept="image/*"
                             (change)="onFileSelected($event, persona)">
 
                         @if (previewUrls[persona.id]) {
-                            <img [src]="previewUrls[persona.id]" class="preview-img"  alt=""/>
+                            <img [src]="previewUrls[persona.id]" class="w-24 rounded"  alt=""/>
                         }
 
                     </ng-template>
@@ -167,17 +168,17 @@
                 <p-cellEditor>
                     <ng-template #input class="flex flex-inline">
                         <input
-                            class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
+                            class="max-w-40 border-solid border-1 rounded-sm border-opacity-50 h-8 px-1"
                             type="text"
                             placeholder="Nombre"
                             [(ngModel)]="persona.nombre" />
                         <input
-                            class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
+                            class="max-w-40 border-solid border-1 rounded-sm border-opacity-50 h-8 px-1"
                             type="text"
                             placeholder="Apellido Paterno"
                             [(ngModel)]="persona.apellidoPaterno" />
                         <input
-                            class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
+                            class="max-w-40 border-solid border-1 rounded-sm border-opacity-50 h-8 px-1"
                             type="text"
                             placeholder="Apellido Materno"
                             [(ngModel)]="persona.apellidoMaterno" />
@@ -193,8 +194,8 @@
                         <p-select
                             class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2 w-full"
                             [options]="[
-                            { label: 'Masculino', value: 'm' },
-                            { label: 'Femenino', value: 'f' }
+                            { label: 'Masc', value: 'm' },
+                            { label: 'Feme', value: 'f' }
                         ]"
                             placeholder="Género"
                             [(ngModel)]="persona.genero"
@@ -210,7 +211,7 @@
                 <p-cellEditor>
                     <ng-template #input>
                         <p-datePicker
-                            class="w-full"
+                            class="max-w-40"
                             id="fechaNacimiento"
                             [showIcon]="true"
                             dateFormat="yy-mm-dd"
@@ -228,7 +229,7 @@
                 <p-cellEditor>
                     <ng-template #input>
                         <input
-                            class="border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
+                            class="max-w-40 border-solid border-1 rounded-sm border-opacity-50 h-10 px-2"
                             pInputText type="text"
                             [(ngModel)]="persona.lugarNacimiento" />
                     </ng-template>
