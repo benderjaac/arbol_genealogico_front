@@ -15,24 +15,10 @@
   (onLazyLoad)="getDataItems($event)"
 
   [loading]="loading"
-  [tableStyle]="{ 'min-width': '50rem' }"
 
   dataKey="id"
   editMode="row"
 >
-
-    <ng-template pTemplate="colgroup">
-        <colgroup>
-            <col style="width:10%">
-            <col style="width:10%">
-            <col style="width:10%">
-            <col style="width:10%">
-            <col style="width:20%">
-            <col style="width:20%">
-            <col style="width:15%">
-        </colgroup>
-    </ng-template>
-
     <ng-template pTemplate="caption">
         <div class="flex items-center justify-between">
             <span class="text-xl font-bold">Personas</span>
@@ -343,7 +329,7 @@
     @if (visibleModalPerson) {
         <app-persons-create
             (msjEvent)="mostrarMensaje($event)"
-            (cerrarDialog)="closeDialogParejas($event)">
+            (cerrarDialog)="closeDialogPerson($event)">
         </app-persons-create>
     }
 </p-dialog>

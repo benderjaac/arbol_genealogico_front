@@ -77,8 +77,9 @@ export class PersonsCreateComponent {
     this._personService.create(formData)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: () => {
-          this.loading = false;
+        next: (res) => {
+          this.msjEvent.emit({tipo:'success', mensaje:res.message});
+          this.cerrarDialog.emit(true);
         },
         error: () => {
           this.loading = false;

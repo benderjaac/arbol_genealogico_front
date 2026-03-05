@@ -327,6 +327,7 @@ export class PersonsListComponent {
     }
   }
 
+
   addPerson() {
     this.visibleModalPerson=true;
   }
