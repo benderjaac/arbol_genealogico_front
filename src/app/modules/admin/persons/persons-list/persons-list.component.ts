@@ -82,6 +82,7 @@ export class PersonsListComponent {
   }
 
   getDataItems(event: TableLazyLoadEvent):void{
+    this.cancelAllActiveEditions();
     this.lastEvent=event;
     this.loading = true;
 
@@ -189,9 +190,6 @@ export class PersonsListComponent {
   onRowEditInit(persona: Person) {
     this.cancelAllActiveEditions();
     this.clonedItems[persona.id as unknown as string] = { ...persona };
-    if(persona.photoUrl!==null){
-      //this.previewUrl=??
-    }
     persona.editing = true;
   }
 
@@ -210,6 +208,7 @@ export class PersonsListComponent {
       this.personas[index] = { ...this.clonedItems[persona.id as unknown as string] };
       delete this.clonedItems[persona.id as unknown as string];
     }
+    delete this.previewUrls[persona.id!];
     this.dt.cancelRowEdit(this.personas[index]);
     persona.editing = false;
   }
