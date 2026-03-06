@@ -4,7 +4,7 @@ import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { ResponseApiSimple, ResponseApiType } from '../models/response-api.model';
 import { User } from '../models/user.model';
-import { ApiQuery } from '../models/query.model';
+import {ApiFilter, ApiPagination, ApiQuery, ApiSort} from '../models/query.model';
 import {Person} from '../models/person.model';
 import {UnionSummaryDto} from '../models/UnionSummary.model';
 
@@ -23,6 +23,24 @@ export class PersonService {
 
   getDataPersons(query: ApiQuery):Observable<ResponseApiType<Person>>{
     return this._httpClient.post<ResponseApiType<Person>>(this.urlApi+'/api/persons/data', query);
+  }
+
+  search(query: string): Observable<ResponseApiType<Person>> {
+    const apiQuery: ApiQuery =  {
+      filters : [{
+        field: 'nombreCompleto',
+        operator: '_lk_',
+        value: query,
+        type: 'string'
+      }],
+      sorter: [{field: 'nombreCompleto', order: "ASC"}],
+      pagination: {
+        perPage: 10,
+        currentPage: 1
+      }
+    };
+
+    return this.getDataPersons(apiQuery);
   }
 
   createPerson(data:any):Observable<ResponseApiSimple<Person>>{

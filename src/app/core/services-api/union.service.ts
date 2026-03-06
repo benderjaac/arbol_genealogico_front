@@ -22,6 +22,6 @@ export class UnionService {
   }
 
   create(param: { person1Id: number; person2Id: number }) {
-    return this._httpClient.post<ResponseApiSimple<UnionSummaryDto>>(this.urlApi+'/api/persons', param);
+    return this._httpClient.post<ResponseApiSimple<UnionSummaryDto>>(this.urlApi+'/api/unions', param);
   }
 }

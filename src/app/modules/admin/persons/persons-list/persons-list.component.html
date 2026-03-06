@@ -57,7 +57,7 @@
 
     <ng-template pTemplate="header">
         <tr>
-            <th><p-iconfield></p-iconfield></th>
+            <th style="min-width: 100px;"><p-iconfield></p-iconfield></th>
             <th pSortableColumn="nombreCompleto"><p-sortIcon field="nombreCompleto" /> Nombre completo</th>
             <th pSortableColumn="genero"><p-sortIcon field="genero" /> Género</th>
             <th pSortableColumn="fechaNacimiento"><p-sortIcon field="fechaNacimiento" />F. Naci. </th>
@@ -72,7 +72,7 @@
                 <th>
                     <input
                         #inputNombreCompleto
-                        class="border-solid border-2 rounded-full pl-2"
+                        class="max-w-40 border-solid border-2 rounded-full pl-2"
                         pInputText
                         type="text"
                         (input)="onFilterInput($event, 'nombreCompleto', 'contains')"
@@ -119,14 +119,14 @@
                     }
                 </th>
                 <th>
-                    <input class="border-solid border-2 rounded-full pl-2"
+                    <input class="max-w-40 border-solid border-2 rounded-full pl-2"
                            pInputText
                            type="text"
                            (input)="onFilterInput($event, 'lugarNacimiento', 'contains')"
                     />
                 </th>
                 <th>
-                    <input class="border-solid border-2 rounded-full pl-2"
+                    <input class="max-w-40 border-solid border-2 rounded-full pl-2"
                            pInputText
                            type="text"
                            (input)="onFilterInput($event, 'notas', 'contains')"
@@ -286,7 +286,8 @@
                                 icon="pi pi-plus"
                                 rounded
                                 text
-                                severity="info"
+                                severity="success"
+                                pTooltip="Agregar ..."
                                 (click)="openActionsMenu($event, persona, menu)"
                             ></button>
 
@@ -368,5 +369,21 @@
             (msjEvent)="mostrarMensaje($event)"
             (cerrarDialog)="closeDialogDescendencia($event)">
         </app-descendencia-modal>
+    }
+</p-dialog>
+
+<p-dialog
+    [(visible)]="visibleModalPareja"
+    [modal]="true"
+    [draggable]="false"
+    [style]="{ width: '45vw' }"
+    [resizable]="false">
+    @if (visibleModalPareja) {
+        <app-pareja-modal
+            [persona]="personSelected!"
+            [accion]="accionSelected!"
+            (msjEvent)="mostrarMensaje($event)"
+            (cerrarDialog)="closeDialogPareja($event)">
+        </app-pareja-modal>
     }
 </p-dialog>

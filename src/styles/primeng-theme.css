@@ -6,7 +6,7 @@
 
     /* ================= COLOR PRIMARIO ================= */
     --p-primary-color: #0A96CC;
-    --p-primary-contrast-color: #ffffff;
+    --p-primary-contrast-color: #fff207;
 
     /* ================= BUTTONS ================= */
 
@@ -19,7 +19,7 @@
     /* ================= TABLE ================= */
 
     --p-datatable-header-background: #ffffff;
-    --p-datatable-header-color: #9d2449;
+    --p-datatable-header-color: var(--p-primary-color);
     --p-datatable-header-border-color: #e5e7eb;
 
     --p-datatable-row-hover-background: #f8fafc;
@@ -59,7 +59,7 @@
     /* ================= TABLE ================= */
 
     --p-datatable-header-background: #2f2f2f;
-    --p-datatable-header-color: #e5e7eb;
+    --p-datatable-header-color: var(--p-primary-color);
     --p-datatable-header-border-color: #444;
 
     --p-datatable-row-hover-background: #262626;
