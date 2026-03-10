@@ -1,6 +1,6 @@
 
 import { Component, ElementRef, EventEmitter, Output, Input, ViewChild } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -9,11 +9,12 @@ import {UnionSummaryDto} from '../../../../core/models/UnionSummary.model';
 import {PersonService} from '../../../../core/services-api/person.service';
 import {Subject, takeUntil} from 'rxjs';
 import {UnionService} from '../../../../core/services-api/union.service';
-import {Table, TableModule} from 'primeng/table';
+import {TableModule} from 'primeng/table';
+import {AutoComplete, AutoCompleteCompleteEvent} from 'primeng/autocomplete';
 
 @Component({
   selector: 'app-descendencia-modal',
-  imports: [AutoFocusModule, ReactiveFormsModule, InputTextModule, ButtonModule, TableModule],
+  imports: [AutoFocusModule, ReactiveFormsModule, InputTextModule, ButtonModule, AutoComplete, TableModule, FormsModule],
   templateUrl: './descendencia-modal.component.html',
 })
 export class DescendenciaModalComponent {
@@ -23,6 +24,12 @@ export class DescendenciaModalComponent {
   @Input()
   persona!: Person;
   @ViewChild('usernameInput') usernameInput!: ElementRef;
+
+  @Input()
+  accion!: string;
+
+  filteredPersons: Person[] = [];
+  parejaIds: number[] = [];
 
   destroy$ = new Subject<void>();
 
@@ -39,6 +46,10 @@ export class DescendenciaModalComponent {
 
   ngOnInit(){
     this.loadParejas();
+    if(this.accion==='add'){
+      console.log("Voy agregar nueva pareja",this.persona);
+      this.creatingMode = true
+    }
   }
 
   loadParejas(){
@@ -95,4 +106,28 @@ export class DescendenciaModalComponent {
   verHijos(pareja: any) {
 
   }
+
+  buscarPersonas(event: AutoCompleteCompleteEvent) {
+    const query = event.query?.trim();
+
+    if (!query || query.length < 2) {
+      this.filteredPersons = [];
+      return;
+    }
+
+    this._personService.search(query)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res) => {
+          this.filteredPersons = res.result.data
+            .filter(p =>
+              p.id !== this.persona.id && !this.parejaIds.includes(p.id))
+
+        },
+        error: () => {
+          this.filteredPersons = [];
+        }
+      });
+  }
+
 }

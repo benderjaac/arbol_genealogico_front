@@ -23,11 +23,10 @@ import {Ripple} from 'primeng/ripple';
 import {IconField} from 'primeng/iconfield';
 import {PersonsCreateComponent} from '../persons-create/persons-create.component';
 import {TieredMenu} from 'primeng/tieredmenu';
-import {ParejaModalComponent} from '../pareja-modal/pareja-modal.component';
 
 @Component({
   selector: 'app-users-list',
-  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, Tooltip, DescendenciaModalComponent, InputText, Ripple, IconField, PersonsCreateComponent, TieredMenu, ParejaModalComponent],
+  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, Tooltip, DescendenciaModalComponent, InputText, Ripple, IconField, PersonsCreateComponent, TieredMenu],
   templateUrl: './persons-list.component.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -318,8 +317,9 @@ export class PersonsListComponent {
       });
   }
 
-  showDescendencia(persona: Person):void{
+  showDescendencia(persona: Person, accion:string):void{
     this.personSelected=persona;
+    this.accionSelected=accion;
     this.visibleModalDescendencia=true;
   }
 
@@ -352,20 +352,10 @@ export class PersonsListComponent {
   openActionsMenu(event: Event, persona: Person, menu: any) {
 
     this.actionsMenuItems = [
-      /*{
-        label: 'Padre',
-        icon: 'pi pi-user-plus',
-        command: () => console.log('comant padre')
-      },
-      {
-        label: 'Madre',
-        icon: 'pi pi-user-plus',
-        command: () => console.log('comant madre')
-      },*/
       {
         label: 'Pareja',
         icon: 'pi pi-heart',
-        command: () => this.showAddPareja(persona, "add")
+        command: () => this.showDescendencia(persona, "add")
       },
       {
         label: 'Hijo',
@@ -376,20 +366,4 @@ export class PersonsListComponent {
 
     menu.toggle(event);
   }
-
-  showAddPareja(persona: Person, accion:string):void{
-    this.personSelected=persona;
-    this.accionSelected=accion;
-    this.visibleModalPareja=true;
-  }
-
-  closeDialogPareja(update:boolean) {
-    this.visibleModalPareja = false;
-    this.personSelected = null;
-    this.accionSelected = null;
-    if(update){
-      this.reloadTable();
-    }
-  }
-
 }

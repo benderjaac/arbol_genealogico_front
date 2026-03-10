@@ -272,7 +272,7 @@
                         <button
                             pButton
                             type="button"
-                            (click)="showDescendencia(persona)"
+                            (click)="showDescendencia(persona, '')"
                             icon="pi pi-users"
                             rounded
                             text
@@ -366,24 +366,9 @@
     @if (visibleModalDescendencia) {
         <app-descendencia-modal
             [persona]="personSelected!"
+            [accion]="accionSelected!"
             (msjEvent)="mostrarMensaje($event)"
             (cerrarDialog)="closeDialogDescendencia($event)">
         </app-descendencia-modal>
-    }
-</p-dialog>
-
-<p-dialog
-    [(visible)]="visibleModalPareja"
-    [modal]="true"
-    [draggable]="false"
-    [style]="{ width: '45vw' }"
-    [resizable]="false">
-    @if (visibleModalPareja) {
-        <app-pareja-modal
-            [persona]="personSelected!"
-            [accion]="accionSelected!"
-            (msjEvent)="mostrarMensaje($event)"
-            (cerrarDialog)="closeDialogPareja($event)">
-        </app-pareja-modal>
     }
 </p-dialog>
