@@ -1,0 +1,37 @@
+<div class="mt-3">
+
+    <h5 class="mb-3">Seleccionar persona</h5>
+
+    <p-autoComplete
+        [(ngModel)]="selectedSpouse"
+        [suggestions]="filteredPersons"
+        (completeMethod)="buscarPersonas($event)"
+        optionLabel="nombreCompleto"
+        [dropdown]="true"
+        [minLength]="2"
+        [delay]="300"
+        placeholder="Buscar persona..."
+        [forceSelection]="true"
+    >
+    </p-autoComplete>
+
+    <div class="flex justify-content-end gap-2 mt-4">
+
+        <button
+            pButton
+            label="Cancelar"
+            class="p-button-text"
+            (click)="cancelCreate()"
+        ></button>
+
+        <button
+            pButton
+            label="Guardar"
+            icon="pi pi-check"
+            [disabled]="!selectedSpouse"
+            (click)="crearUnion()"
+        ></button>
+
+    </div>
+
+</div>

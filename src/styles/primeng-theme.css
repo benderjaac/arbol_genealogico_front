@@ -43,6 +43,8 @@
     --p-datatable-row-background: #ffffff;
     --p-datatable-row-striped-background: #fafafa;
 
+    --p-button-primary-color: #fff;
+
 }
 
 
@@ -136,6 +138,8 @@
     /* ================= hover elegante y zebra rows. ======================== */
     --p-datatable-row-background: #1f1f1f;
     --p-datatable-row-striped-background: #262626;
+
+    --p-button-primary-color: #fff;
 
 
     .card-union{

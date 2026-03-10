@@ -10,14 +10,15 @@ import {PersonService} from '../../../../core/services-api/person.service';
 import {Subject, takeUntil} from 'rxjs';
 import {UnionService} from '../../../../core/services-api/union.service';
 import {TableModule} from 'primeng/table';
-import {AutoComplete, AutoCompleteCompleteEvent} from 'primeng/autocomplete';
 import {Tooltip} from 'primeng/tooltip';
 import {Tag} from 'primeng/tag';
-import {PersonTableComponent} from '../person-table/person-table.component';
+import {HijosTableComponent} from '../hijos-table/hijos-table.component';
+import {Dialog} from 'primeng/dialog';
+import {AddSpouseModalComponent} from '../add-spouse-modal/add-spouse-modal.component';
 
 @Component({
   selector: 'app-descendencia-modal',
-  imports: [AutoFocusModule, ReactiveFormsModule, InputTextModule, ButtonModule, AutoComplete, TableModule, FormsModule, Tooltip, Tag, PersonTableComponent],
+  imports: [AutoFocusModule, ReactiveFormsModule, InputTextModule, ButtonModule, TableModule, FormsModule, Tooltip, Tag, HijosTableComponent, Dialog, AddSpouseModalComponent],
   templateUrl: './descendencia-modal.component.html',
 })
 export class DescendenciaModalComponent {
@@ -31,15 +32,16 @@ export class DescendenciaModalComponent {
   @Input()
   accion!: string;
 
-  filteredPersons: Person[] = [];
-  parejaIds: number[] = [];
+
+
 
   destroy$ = new Subject<void>();
 
   parejas: UnionSummaryDto[]=[];
-  creatingMode = false;
-  selectedSpouse: Person | null = null;
+
   loading = false;
+
+  visibleModalSpouse: boolean = false;
 
   constructor(
     private _personService : PersonService,
@@ -51,7 +53,7 @@ export class DescendenciaModalComponent {
     this.loadParejas();
     if(this.accion==='add'){
       console.log("Voy agregar nueva pareja",this.persona);
-      this.creatingMode = true
+      this.visibleModalSpouse = true
     }
   }
 
@@ -73,64 +75,20 @@ export class DescendenciaModalComponent {
       });
   }
 
-  crearUnion() {
-
-    if (!this.selectedSpouse) return;
-
-    this.loading = true;
-
-    this._unionService.create({
-      person1Id: this.persona.id,
-      person2Id: this.selectedSpouse.id
-    }).subscribe({
-      next: () => {
-
-        this.loadParejas(); // recargar lista
-
-        this.selectedSpouse = null;
-        this.creatingMode = false;
-
-        this.loading = false;
-      },
-      error: () => {
-        this.loading = false;
-      }
-    });
-  }
-
-  cancelCreate() {
-    this.creatingMode = false;
-  }
-
-  eliminarUnion(pareja: any) {
-
-  }
-
-  buscarPersonas(event: AutoCompleteCompleteEvent) {
-    const query = event.query?.trim();
-
-    if (!query || query.length < 2) {
-      this.filteredPersons = [];
-      return;
-    }
-
-    this._personService.search(query)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (res) => {
-          this.filteredPersons = res.result.data
-            .filter(p =>
-              p.id !== this.persona.id && !this.parejaIds.includes(p.id))
-
-        },
-        error: () => {
-          this.filteredPersons = [];
-        }
-      });
-  }
 
   cerrar() {
     this.cerrarDialog.emit();
+  }
+
+  mostrarMensaje(event:any) {
+    this.msjEvent.emit(event);
+  }
+
+  closeDialogAddSpouse(update:boolean) {
+    this.visibleModalSpouse = false;
+    if(update){
+      this.loadParejas();
+    }
   }
 
 }

@@ -5,12 +5,12 @@ import {TooltipModule} from 'primeng/tooltip';
 import {TableModule} from 'primeng/table';
 
 @Component({
-  selector: 'app-person-table',
+  selector: 'app-hijos-table',
   standalone: true,
   imports: [FormsModule, TooltipModule, TableModule],
-  templateUrl: './person-table.component.html'
+  templateUrl: './hijos-table.component.html'
 })
-export class PersonTableComponent {
+export class HijosTableComponent {
 
   @Input() persons: Person[] = [];
 
