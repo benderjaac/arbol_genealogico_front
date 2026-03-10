@@ -1,0 +1,103 @@
+<p-table
+    [value]="persons"
+    dataKey="id"
+    editMode="row"
+    stripedRows
+    showGridlines
+>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Foto</th>
+            <th>Nombre</th>
+            <th>Género</th>
+            <th>F. Nacimiento</th>
+            <th>Lugar</th>
+            <th>Notas</th>
+            <th>Acciones</th>
+        </tr>
+    </ng-template>
+
+
+    <ng-template pTemplate="body" let-person let-ri="rowIndex">
+        <tr [pEditableRow]="person">
+
+            <!-- FOTO -->
+            <td>
+                @if (person.photoUrl){
+                    <img [src]="person.photoUrl" class="w-16 rounded">
+                }@else{
+                    <img [src]="'img/sin_foto_'+person.genero+'.png'" class="w-16 rounded">
+                }
+            </td>
+
+
+            <!-- NOMBRE -->
+            <td>
+                {{person.nombreCompleto}}
+            </td>
+
+
+            <!-- GENERO -->
+            <td>
+                {{person.genero}}
+            </td>
+
+
+            <!-- FECHA -->
+            <td>
+                {{person.fechaNacimiento}}
+            </td>
+
+
+            <!-- LUGAR -->
+            <td>
+                {{person.lugarNacimiento}}
+
+            </td>
+
+
+            <!-- NOTAS -->
+            <td>
+
+                <p-cellEditor>
+                    {{person.notas}}
+                </p-cellEditor>
+
+            </td>
+
+
+            <!-- ACCIONES -->
+            <td>
+
+                <button
+                    pButton
+                    icon="pi pi-pencil"
+                    pInitEditableRow
+                    (click)="editInit.emit(person)"
+                    text>
+                </button>
+
+                <button
+                    pButton
+                    icon="pi pi-check"
+                    pSaveEditableRow
+                    (click)="save.emit(person)"
+                    text
+                    severity="success">
+                </button>
+
+                <button
+                    pButton
+                    icon="pi pi-trash"
+                    (click)="delete.emit(person)"
+                    text
+                    severity="danger">
+                </button>
+
+            </td>
+
+        </tr>
+    </ng-template>
+
+</p-table>

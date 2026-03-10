@@ -46,9 +46,68 @@
 }
 
 
+.modal-header{
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    position: relative;
+    padding: 2rem;
+}
 
+/* foto */
+.persona-foto img{
+    width: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
 
+.pareja-foto img{
+    width: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+}
 
+/* info */
+.persona-info{
+    flex: 1;
+}
+
+.nombre{
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.nombre-pareja{
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-left: 1rem;
+}
+
+.meta{
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.notas{
+    margin-top: .25rem;
+    font-size: .9rem;
+    opacity: 0.7;
+}
+
+/* boton cerrar */
+.close-btn{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.card-union{
+    background-color: #eee;
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+    margin-bottom: 2rem;
+}
 
 /* =========================================
    DARK MODE
@@ -77,4 +136,9 @@
     /* ================= hover elegante y zebra rows. ======================== */
     --p-datatable-row-background: #1f1f1f;
     --p-datatable-row-striped-background: #262626;
+
+
+    .card-union{
+        background-color: #262626;
+    }
 }

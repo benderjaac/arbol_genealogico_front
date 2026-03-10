@@ -1,7 +1,92 @@
-<h2 class="text-xl font-semibold text-center mb-6">Parejas de: {{persona.nombreCompleto}}</h2>
+<div class="modal-header">
 
-<div class="flex justify-content-end mt-4">
-    @if(!creatingMode){
+    <div class="persona-foto pt-8">
+        @if (persona.photoUrl !== null && persona.photoUrl !== "") {
+            <img [src]="persona.photoUrl" alt="">
+        } @else {
+            <img [src]="`img/sin_foto_${persona.genero}.png`" alt="">
+        }
+    </div>
+
+    <div class="persona-info">
+        <div class="meta">
+            <h2 class="nombre">
+                {{ persona?.nombreCompleto }}
+            </h2>
+            @if (persona.fechaNacimiento){
+                <p-tag  class="mt-2" value="{{persona.fechaNacimiento}}" icon="pi pi-calendar"></p-tag>
+                <br>
+            }
+            @if (persona.lugarNacimiento){
+                <p-tag class="mt-2" value="{{persona.lugarNacimiento}}" icon="pi pi-map-marker"></p-tag>
+                <br>
+            }
+            @if (persona.notas){
+                <p-tag class="mt-2" value="{{persona.notas}}" icon="pi pi-info"></p-tag>
+            }
+        </div>
+    </div>
+
+    <button
+        pButton
+        icon="pi pi-times"
+        class="close-btn p-button-rounded p-button-text"
+        (click)="cerrar()">
+    </button>
+</div>
+
+@if(parejas.length>0){
+    @for (union of parejas; track union.unionId) {
+        <div class="card-union">
+            <div class="persona-info">
+                <div class="meta">
+                    <div class="flex">
+                        <div class="pareja-foto pt-2">
+                            @if (union.spouse.photoUrl !== null && union.spouse.photoUrl !== "") {
+                                <img [src]="union.spouse.photoUrl" alt="">
+                            } @else {
+                                <img [src]="`img/sin_foto_${union.spouse.genero}.png`" alt="">
+                            }
+                        </div>
+                        <div class="nombre-pareja">
+                            {{ union.spouse?.nombreCompleto }}
+                            @if (union.spouse.fechaNacimiento){
+                                <p-tag  class="mt-2 mt-2" value="{{union.spouse.fechaNacimiento}}" icon="pi pi-calendar"></p-tag>
+                            }
+                            @if (union.spouse.lugarNacimiento){
+                                <p-tag class="mt-2 mt-2" value="{{union.spouse.lugarNacimiento}}" icon="pi pi-map-marker"></p-tag>
+                            }
+                            @if (union.spouse.notas){
+                                <p-tag class="mt-2 mt-2" value="{{union.spouse.notas}}" icon="pi pi-info"></p-tag>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if(union.children.length>0){
+                <div class="mt-2">
+                    <app-person-table
+                        [persons]="union.children"
+                        (save)="false"
+                        (delete)="false">
+                    </app-person-table>
+
+                </div>
+            } @else{
+                <div class="text-center py-4">
+                    Sin hijos registrados
+                </div>
+            }
+        </div>
+    }
+} @else {
+    <div class="text-center py-4">
+        No tiene parejas registradas
+    </div>
+}
+
+@if(!creatingMode){
+    <div class="flex justify-content-end mt-4">
         <button
             pButton
             icon="pi pi-plus"
@@ -11,8 +96,8 @@
             pTooltip="Agregar pareja"
             (click)="creatingMode = true"
         ></button>
-    }
-</div>
+    </div>
+}
 
 @if (creatingMode) {
     <div class="mt-3">
@@ -53,65 +138,3 @@
 
     </div>
 }
-
-<div class="mt-8">
-    <p-table
-        [value]="parejas"
-        [loading]="loading"
-        class="p-datatable-sm"
-    >
-
-        <ng-template pTemplate="header">
-            @if(parejas.length>0){
-                <tr>
-                    <th>Pareja</th>
-                    <th class="text-center">Hijos</th>
-                    <th class="text-center">Acciones</th>
-                </tr>
-            }
-        </ng-template>
-
-        <ng-template pTemplate="body" let-pareja>
-            <tr>
-                <td>
-                    {{ pareja.spouse.nombreCompleto }}
-                </td>
-
-                <td class="text-center">
-            <span class="font-semibold">
-              {{ pareja.childrenCount }}
-            </span>
-                </td>
-
-                <td class="text-center">
-                    <button
-                        pButton
-                        icon="pi pi-eye"
-                        class="p-button-text p-button-sm"
-                        pTooltip="Ver hijos"
-                        (click)="verHijos(pareja)"
-                    ></button>
-
-                    <button
-                        pButton
-                        icon="pi pi-trash"
-                        class="p-button-text p-button-sm p-button-danger"
-                        pTooltip="Eliminar unión"
-                        (click)="eliminarUnion(pareja)"
-                    ></button>
-                </td>
-            </tr>
-        </ng-template>
-
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="3" class="text-center py-4">
-                    No tiene parejas registradas
-                </td>
-            </tr>
-        </ng-template>
-
-    </p-table>
-
-</div>
-

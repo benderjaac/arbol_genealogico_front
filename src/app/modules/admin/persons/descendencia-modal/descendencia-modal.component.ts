@@ -11,10 +11,13 @@ import {Subject, takeUntil} from 'rxjs';
 import {UnionService} from '../../../../core/services-api/union.service';
 import {TableModule} from 'primeng/table';
 import {AutoComplete, AutoCompleteCompleteEvent} from 'primeng/autocomplete';
+import {Tooltip} from 'primeng/tooltip';
+import {Tag} from 'primeng/tag';
+import {PersonTableComponent} from '../person-table/person-table.component';
 
 @Component({
   selector: 'app-descendencia-modal',
-  imports: [AutoFocusModule, ReactiveFormsModule, InputTextModule, ButtonModule, AutoComplete, TableModule, FormsModule],
+  imports: [AutoFocusModule, ReactiveFormsModule, InputTextModule, ButtonModule, AutoComplete, TableModule, FormsModule, Tooltip, Tag, PersonTableComponent],
   templateUrl: './descendencia-modal.component.html',
 })
 export class DescendenciaModalComponent {
@@ -96,14 +99,10 @@ export class DescendenciaModalComponent {
   }
 
   cancelCreate() {
-
+    this.creatingMode = false;
   }
 
   eliminarUnion(pareja: any) {
-
-  }
-
-  verHijos(pareja: any) {
 
   }
 
@@ -128,6 +127,10 @@ export class DescendenciaModalComponent {
           this.filteredPersons = [];
         }
       });
+  }
+
+  cerrar() {
+    this.cerrarDialog.emit();
   }
 
 }

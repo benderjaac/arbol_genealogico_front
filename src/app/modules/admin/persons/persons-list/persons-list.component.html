@@ -362,7 +362,11 @@
     [modal]="true"
     [draggable]="false"
     [style]="{ width: '90vw' }"
-    [resizable]="false">
+    [resizable]="false"
+    [showHeader]="false"
+    [closeOnEscape]="true"
+    [dismissableMask]="true"
+>
     @if (visibleModalDescendencia) {
         <app-descendencia-modal
             [persona]="personSelected!"
