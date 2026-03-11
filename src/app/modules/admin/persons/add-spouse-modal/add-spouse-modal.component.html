@@ -1,8 +1,22 @@
-<div class="mt-3">
+<div class="modal-header">
+    <div class="persona-info flex w-full items-center justify-center">
+        <h2 class="nombre">
+            Agregar pareja
+        </h2>
+    </div>
 
+    <button
+        pButton
+        icon="pi pi-times"
+        class="close-btn p-button-rounded p-button-text"
+        (click)="cancelCreate()">
+    </button>
+</div>
+<div class="mt-3">
     <h5 class="mb-3">Seleccionar persona</h5>
 
     <p-autoComplete
+        class="w-full"
         [(ngModel)]="selectedSpouse"
         [suggestions]="filteredPersons"
         (completeMethod)="buscarPersonas($event)"

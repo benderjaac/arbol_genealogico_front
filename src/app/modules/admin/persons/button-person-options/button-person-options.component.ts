@@ -26,6 +26,7 @@ export class ButtonPersonOptionsComponent {
   @Input() union!: UnionSummaryDto | null;
   @Input() notdescendencia: boolean=false;
   @Input() notpareja: boolean=false;
+  @Input() notchild: boolean=false;
 
   actionsMenuItems: any[] = [];
   @Output() actionEvent = new EventEmitter<EventAccion>();
@@ -59,6 +60,10 @@ export class ButtonPersonOptionsComponent {
 
     if(this.notpareja){
       delete this.actionsMenuItems[2];
+    }
+
+    if(this.notchild){
+      delete this.actionsMenuItems[3];
     }
 
     this.actionsMenuItems=this.actionsMenuItems.filter(

@@ -6,13 +6,17 @@ import {FormsModule} from '@angular/forms';
 import {PersonService} from '../../../../core/services-api/person.service';
 import {UnionService} from '../../../../core/services-api/union.service';
 import {Subject, takeUntil} from 'rxjs';
+import {ButtonPersonOptionsComponent} from '../button-person-options/button-person-options.component';
+import {Tag} from 'primeng/tag';
 
 @Component({
   selector: 'app-add-spouse-modal',
   imports: [
     AutoComplete,
     ButtonDirective,
-    FormsModule
+    FormsModule,
+    ButtonPersonOptionsComponent,
+    Tag
   ],
   templateUrl: './add-spouse-modal.component.html',
 })
