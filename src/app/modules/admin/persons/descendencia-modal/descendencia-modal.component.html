@@ -77,8 +77,11 @@
                 <div class="mt-2">
                     <app-hijos-table
                         [persons]="union.children"
+                        [unionId]="union.unionId"
                         (save)="false"
-                        (delete)="false">
+                        (delete)="false"
+                        (deleteChild)="loadUnions()"
+                    >
                     </app-hijos-table>
 
                 </div>

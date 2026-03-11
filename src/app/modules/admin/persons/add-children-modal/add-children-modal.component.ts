@@ -53,11 +53,14 @@ export class AddChildrenModalComponent {
       unionId: this.union?.unionId!,
       childId: this.selectedPerson.id
     }).subscribe({
-      next: () => {
+      next: (resp) => {
+        this.msjEvent.emit({tipo:'success', mensaje:resp.message});
         this.cerrarDialog.emit(true);
         this.loading = false;
       },
-      error: () => {
+      error: (err) => {
+        this.msjEvent.emit({tipo:'error', mensaje:err.error.error});
+        this.cerrarDialog.emit(false);
         this.loading = false;
       }
     });

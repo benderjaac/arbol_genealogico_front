@@ -12,6 +12,7 @@ export interface Person{
   notas:string,
   photoUrl:string,
   editing?: boolean,
+  childId?: number,
 }
 
 export interface PersonCreateDto {

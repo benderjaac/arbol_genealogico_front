@@ -24,4 +24,8 @@ export class UnionChildService {
   create(param: { childId: number; unionId: number }) {
     return this._httpClient.post<ResponseApiSimple<UnionSummaryDto>>(this.urlApi+'/api/child', param);
   }
+
+  delete(unionId:number, personId:number):Observable<ResponseApiSimple<null>>{
+    return this._httpClient.delete<ResponseApiSimple<null>>(this.urlApi+'/api/child/'+unionId+'/'+personId);
+  }
 }

@@ -59,41 +59,26 @@
 
             <!-- NOTAS -->
             <td>
-
-                <p-cellEditor>
-                    {{person.notas}}
-                </p-cellEditor>
-
+                {{person.notas}}
             </td>
 
 
             <!-- ACCIONES -->
             <td>
-
-                <button
-                    pButton
-                    icon="pi pi-pencil"
-                    pInitEditableRow
-                    (click)="editInit.emit(person)"
-                    text>
-                </button>
-
-                <button
-                    pButton
-                    icon="pi pi-check"
-                    pSaveEditableRow
-                    (click)="save.emit(person)"
-                    text
-                    severity="success">
-                </button>
-
-                <button
-                    pButton
-                    icon="pi pi-trash"
-                    (click)="delete.emit(person)"
-                    text
-                    severity="danger">
-                </button>
+                <div class="flex items-center justify-center gap-2">
+                    <p-confirmpopup #cp/>
+                    <button
+                        pButton
+                        pRipple
+                        type="button"
+                        (click)="onDelete(person, $event)"
+                        icon="pi pi-trash"
+                        rounded
+                        text
+                        severity="warn"
+                        pTooltip="Desvincular">
+                    </button>
+                </div>
 
             </td>
 
