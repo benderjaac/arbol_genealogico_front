@@ -22,11 +22,11 @@ import {InputText} from 'primeng/inputtext';
 import {Ripple} from 'primeng/ripple';
 import {IconField} from 'primeng/iconfield';
 import {PersonsCreateComponent} from '../persons-create/persons-create.component';
-import {TieredMenu} from 'primeng/tieredmenu';
+import {ButtonPersonOptionsComponent, EventAccion} from '../button-person-options/button-person-options.component';
 
 @Component({
   selector: 'app-users-list',
-  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, Tooltip, DescendenciaModalComponent, InputText, Ripple, IconField, PersonsCreateComponent, TieredMenu],
+  imports: [Dialog, Toast, TableModule, ButtonModule, DatePickerModule, FormsModule, Select, ConfirmPopup, Tooltip, DescendenciaModalComponent, InputText, Ripple, IconField, PersonsCreateComponent, ButtonPersonOptionsComponent],
   templateUrl: './persons-list.component.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -49,7 +49,6 @@ export class PersonsListComponent {
 
   visibleModalPerson = false;
   visibleModalDescendencia = false;
-  visibleModalPareja:boolean = false;
   personSelected:Person|null = null;
   accionSelected:string|null = null;
 
@@ -59,8 +58,6 @@ export class PersonsListComponent {
 
   selectedFiles: { [key: string]: File } = {};
   previewUrls: { [key: string]: string } = {};
-
-  actionsMenuItems: any[] = [];
 
   public readonly Genero = Genero;
 
@@ -317,10 +314,12 @@ export class PersonsListComponent {
       });
   }
 
-  showDescendencia(persona: Person, accion:string):void{
-    this.personSelected=persona;
-    this.accionSelected=accion;
-    this.visibleModalDescendencia=true;
+  actionEventButton(event:EventAccion):void{
+    this.personSelected=event.persona;
+    this.accionSelected=event.accion;
+    if(event.accion==='addSpouse'){
+      this.visibleModalDescendencia=true;
+    }
   }
 
   closeDialogDescendencia(update:boolean) {
@@ -349,21 +348,4 @@ export class PersonsListComponent {
     reader.readAsDataURL(file);
   }
 
-  openActionsMenu(event: Event, persona: Person, menu: any) {
-
-    this.actionsMenuItems = [
-      {
-        label: 'Pareja',
-        icon: 'pi pi-heart',
-        command: () => this.showDescendencia(persona, "add")
-      },
-      {
-        label: 'Hijo',
-        icon: 'pi pi-users',
-        command: () => console.log('comant hijo')
-      }
-    ];
-
-    menu.toggle(event);
-  }
 }

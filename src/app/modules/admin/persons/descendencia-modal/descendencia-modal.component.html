@@ -12,6 +12,11 @@
         <div class="meta">
             <h2 class="nombre">
                 {{ persona.nombreCompleto }}
+                <app-button-person-options
+                    [persona]="persona"
+                    [notdescendencia]="true"
+                    (actionEvent)="actionEventButton($event)"
+                />
             </h2>
             @if (persona.fechaNacimiento){
                 <p-tag  class="mt-2" value="{{persona.fechaNacimiento}}" icon="pi pi-calendar"></p-tag>
@@ -38,29 +43,25 @@
 @if(parejas.length>0){
     @for (union of parejas; track union.unionId) {
         <div class="card-union">
-            <div class="persona-info">
-                <div class="meta">
-                    <div class="flex">
-                        <div class="pareja-foto pt-2">
-                            @if (union.spouse.photoUrl !== null && union.spouse.photoUrl !== "") {
-                                <img [src]="union.spouse.photoUrl" alt="">
-                            } @else {
-                                <img [src]="`img/sin_foto_${union.spouse.genero}.png`" alt="">
-                            }
-                        </div>
-                        <div class="nombre-pareja">
-                            {{ union.spouse.nombreCompleto }}
-                            @if (union.spouse.fechaNacimiento){
-                                <p-tag  class="mt-2 mt-2" value="{{union.spouse.fechaNacimiento}}" icon="pi pi-calendar"></p-tag>
-                            }
-                            @if (union.spouse.lugarNacimiento){
-                                <p-tag class="mt-2 mt-2" value="{{union.spouse.lugarNacimiento}}" icon="pi pi-map-marker"></p-tag>
-                            }
-                            @if (union.spouse.notas){
-                                <p-tag class="mt-2 mt-2" value="{{union.spouse.notas}}" icon="pi pi-info"></p-tag>
-                            }
-                        </div>
-                    </div>
+            <div class="flex w-full items-center justify-center">
+                <div class="pareja-foto pt-2">
+                    @if (union.spouse.photoUrl !== null && union.spouse.photoUrl !== "") {
+                        <img [src]="union.spouse.photoUrl" alt="">
+                    } @else {
+                        <img [src]="`img/sin_foto_${union.spouse.genero}.png`" alt="">
+                    }
+                </div>
+                <div class="nombre-pareja">
+                    {{ union.spouse.nombreCompleto }}
+                    @if (union.spouse.fechaNacimiento){
+                        <p-tag  class="mt-2 ml-2" value="{{union.spouse.fechaNacimiento}}" icon="pi pi-calendar"></p-tag>
+                    }
+                    @if (union.spouse.lugarNacimiento){
+                        <p-tag class="mt-2 ml-2" value="{{union.spouse.lugarNacimiento}}" icon="pi pi-map-marker"></p-tag>
+                    }
+                    @if (union.spouse.notas){
+                        <p-tag class="mt-2 ml-2" value="{{union.spouse.notas}}" icon="pi pi-info"></p-tag>
+                    }
                 </div>
             </div>
             @if(union.children.length>0){
@@ -84,19 +85,6 @@
         No tiene parejas registradas
     </div>
 }
-
-
-    <div class="flex justify-content-end mt-4">
-        <button
-            pButton
-            icon="pi pi-plus"
-            rounded
-            text
-            severity="success"
-            pTooltip="Agregar pareja"
-            (click)="visibleModalSpouse = true"
-        ></button>
-    </div>
 
 
 <p-dialog

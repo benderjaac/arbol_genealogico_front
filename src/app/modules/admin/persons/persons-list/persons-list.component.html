@@ -268,36 +268,11 @@
                             severity="info"
                             pTooltip="Editar">
                         </button>
-                        <!--Parejas-->
-                        <button
-                            pButton
-                            type="button"
-                            (click)="showDescendencia(persona, '')"
-                            icon="pi pi-users"
-                            rounded
-                            text
-                            severity="info"
-                            pTooltip="Descendencia">
-                        </button>
 
-                        <div class="card flex justify-center">
-                            <button
-                                pButton
-                                icon="pi pi-plus"
-                                rounded
-                                text
-                                severity="success"
-                                pTooltip="Agregar ..."
-                                (click)="openActionsMenu($event, persona, menu)"
-                            ></button>
-
-                            <p-tieredMenu
-                                #menu
-                                [popup]="true"
-                                [model]="actionsMenuItems"
-                                appendTo="body">
-                            </p-tieredMenu>
-                        </div>
+                        <app-button-person-options
+                            [persona]="persona"
+                            (actionEvent)="actionEventButton($event)"
+                        />
 
                     } @else {
                         <button

@@ -15,10 +15,11 @@ import {Tag} from 'primeng/tag';
 import {HijosTableComponent} from '../hijos-table/hijos-table.component';
 import {Dialog} from 'primeng/dialog';
 import {AddSpouseModalComponent} from '../add-spouse-modal/add-spouse-modal.component';
+import {ButtonPersonOptionsComponent, EventAccion} from '../button-person-options/button-person-options.component';
 
 @Component({
   selector: 'app-descendencia-modal',
-  imports: [AutoFocusModule, ReactiveFormsModule, InputTextModule, ButtonModule, TableModule, FormsModule, Tooltip, Tag, HijosTableComponent, Dialog, AddSpouseModalComponent],
+  imports: [AutoFocusModule, ReactiveFormsModule, InputTextModule, ButtonModule, TableModule, FormsModule, Tooltip, Tag, HijosTableComponent, Dialog, AddSpouseModalComponent, ButtonPersonOptionsComponent],
   templateUrl: './descendencia-modal.component.html',
 })
 export class DescendenciaModalComponent {
@@ -31,9 +32,6 @@ export class DescendenciaModalComponent {
 
   @Input()
   accion!: string;
-
-
-
 
   destroy$ = new Subject<void>();
 
@@ -51,8 +49,7 @@ export class DescendenciaModalComponent {
 
   ngOnInit(){
     this.loadParejas();
-    if(this.accion==='add'){
-      console.log("Voy agregar nueva pareja",this.persona);
+    if(this.accion==='addSpouse'){
       this.visibleModalSpouse = true
     }
   }
@@ -88,6 +85,12 @@ export class DescendenciaModalComponent {
     this.visibleModalSpouse = false;
     if(update){
       this.loadParejas();
+    }
+  }
+
+  actionEventButton(event:EventAccion):void{
+    if(event.accion==='addSpouse'){
+      this.visibleModalSpouse = true
     }
   }
 
