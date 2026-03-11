@@ -10,16 +10,16 @@ import {PersonService} from '../../../../core/services-api/person.service';
 import {Subject, takeUntil} from 'rxjs';
 import {UnionService} from '../../../../core/services-api/union.service';
 import {TableModule} from 'primeng/table';
-import {Tooltip} from 'primeng/tooltip';
 import {Tag} from 'primeng/tag';
 import {HijosTableComponent} from '../hijos-table/hijos-table.component';
 import {Dialog} from 'primeng/dialog';
 import {AddSpouseModalComponent} from '../add-spouse-modal/add-spouse-modal.component';
 import {ButtonPersonOptionsComponent, EventAccion} from '../button-person-options/button-person-options.component';
+import {AddChildrenModalComponent} from '../add-children-modal/add-children-modal.component';
 
 @Component({
   selector: 'app-descendencia-modal',
-  imports: [AutoFocusModule, ReactiveFormsModule, InputTextModule, ButtonModule, TableModule, FormsModule, Tooltip, Tag, HijosTableComponent, Dialog, AddSpouseModalComponent, ButtonPersonOptionsComponent],
+  imports: [AutoFocusModule, ReactiveFormsModule, InputTextModule, ButtonModule, TableModule, FormsModule, Tag, HijosTableComponent, Dialog, AddSpouseModalComponent, ButtonPersonOptionsComponent, AddChildrenModalComponent],
   templateUrl: './descendencia-modal.component.html',
 })
 export class DescendenciaModalComponent {
@@ -36,10 +36,12 @@ export class DescendenciaModalComponent {
   destroy$ = new Subject<void>();
 
   parejas: UnionSummaryDto[]=[];
+  unionSelected: UnionSummaryDto | null | undefined=null;
 
   loading = false;
 
   visibleModalSpouse: boolean = false;
+  visibleModalChildren: boolean = false;
 
   constructor(
     private _personService : PersonService,
@@ -48,13 +50,13 @@ export class DescendenciaModalComponent {
   }
 
   ngOnInit(){
-    this.loadParejas();
+    this.loadUnions();
     if(this.accion==='addSpouse'){
       this.visibleModalSpouse = true
     }
   }
 
-  loadParejas(){
+  loadUnions(){
     this.loading=true;
     this._personService.getParejas(this.persona.id)
       .pipe(takeUntil(this.destroy$))
@@ -84,13 +86,25 @@ export class DescendenciaModalComponent {
   closeDialogAddSpouse(update:boolean) {
     this.visibleModalSpouse = false;
     if(update){
-      this.loadParejas();
+      this.loadUnions();
+    }
+  }
+
+  closeDialogAddChildren(update:boolean) {
+    this.visibleModalChildren = false;
+    if(update){
+      this.loadUnions();
     }
   }
 
   actionEventButton(event:EventAccion):void{
     if(event.accion==='addSpouse'){
       this.visibleModalSpouse = true
+    }
+
+    if(event.accion==='addChildren'){
+      this.unionSelected=event.union;
+      this.visibleModalChildren = true
     }
   }
 

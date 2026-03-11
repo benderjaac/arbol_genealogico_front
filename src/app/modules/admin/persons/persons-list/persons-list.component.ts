@@ -317,7 +317,7 @@ export class PersonsListComponent {
   actionEventButton(event:EventAccion):void{
     this.personSelected=event.persona;
     this.accionSelected=event.accion;
-    if(event.accion==='addSpouse'){
+    if(event.accion==='addSpouse' || event.accion==='showChildren' || event.accion==='addChildren'){
       this.visibleModalDescendencia=true;
     }
   }

@@ -53,6 +53,14 @@
                 </div>
                 <div class="nombre-pareja">
                     {{ union.spouse.nombreCompleto }}
+
+                    <app-button-person-options
+                        [persona]="union.spouse"
+                        [union]="union"
+                        [notdescendencia]="true"
+                        [notpareja]="true"
+                        (actionEvent)="actionEventButton($event)"/>
+
                     @if (union.spouse.fechaNacimiento){
                         <p-tag  class="mt-2 ml-2" value="{{union.spouse.fechaNacimiento}}" icon="pi pi-calendar"></p-tag>
                     }
@@ -103,5 +111,25 @@
             (msjEvent)="mostrarMensaje($event)"
             (cerrarDialog)="closeDialogAddSpouse($event)">
         </app-add-spouse-modal>
+    }
+</p-dialog>
+
+<p-dialog
+    [(visible)]="visibleModalChildren"
+    [modal]="true"
+    [draggable]="false"
+    [style]="{ width: '50vw' }"
+    [resizable]="false"
+    [showHeader]="true"
+    [closeOnEscape]="true"
+    [dismissableMask]="true"
+>
+    @if (visibleModalChildren) {
+        <app-add-children-modal
+            [persona]="persona"
+            [union]="unionSelected"
+            (msjEvent)="mostrarMensaje($event)"
+            (cerrarDialog)="closeDialogAddChildren($event)">
+        </app-add-children-modal>
     }
 </p-dialog>

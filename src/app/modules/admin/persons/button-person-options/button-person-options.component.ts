@@ -3,9 +3,12 @@ import {ButtonDirective} from "primeng/button";
 import {TieredMenu} from "primeng/tieredmenu";
 import {Tooltip} from "primeng/tooltip";
 import {Person} from '../../../../core/models/person.model';
+import {UnionSummaryDto} from '../../../../core/models/UnionSummary.model';
 
 export interface EventAccion {
-    persona: Person, accion: string
+  persona: Person,
+  union?: UnionSummaryDto | null,
+  accion: string
 };
 
 @Component({
@@ -20,12 +23,14 @@ export interface EventAccion {
 export class ButtonPersonOptionsComponent {
 
   @Input() persona!: Person;
+  @Input() union!: UnionSummaryDto | null;
   @Input() notdescendencia: boolean=false;
+  @Input() notpareja: boolean=false;
 
   actionsMenuItems: any[] = [];
   @Output() actionEvent = new EventEmitter<EventAccion>();
 
-  openActionsMenu(event: Event, persona: Person, menu: any) {
+  openActionsMenu(event: Event, persona: Person, menu: any, union:UnionSummaryDto|null=null) {
 
     this.actionsMenuItems = [
       {
@@ -44,13 +49,23 @@ export class ButtonPersonOptionsComponent {
       {
         label: 'Agregar hijos',
         icon: 'pi pi-users',
-        command: () => this.actionEvent.emit({persona: persona, accion: 'addChildren'})
+        command: () => this.actionEvent.emit({persona: persona, union: union, accion: 'addChildren'})
       }
     ];
 
     if(this.notdescendencia){
-      this.actionsMenuItems.shift();
+      delete this.actionsMenuItems[0];
     }
+
+    if(this.notpareja){
+      delete this.actionsMenuItems[2];
+    }
+
+    this.actionsMenuItems=this.actionsMenuItems.filter(
+      item => item!==undefined
+    );
+
+
 
     menu.toggle(event);
   }
